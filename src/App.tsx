@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { StyledEngineProvider } from '@mui/material/styles';
+import ScrollToTop from './components/ScrollToTop';
 
 // Components
 import Layout from './components/Layout/Layout';
@@ -19,6 +20,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Router basename="/part-identifier-frontend">
+          <ScrollToTop />
           <Layout>
             <Routes>
               <Route path="/" element={<PartIdentificationPage />} />
