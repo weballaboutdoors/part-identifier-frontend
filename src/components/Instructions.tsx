@@ -25,7 +25,11 @@ const Instructions: React.FC = () => {
             gutterBottom
             sx={{ 
               fontSize: { xs: '1.1rem', sm: '1.25rem' },
-              textAlign: { xs: 'center', sm: 'left' }
+              textAlign: { xs: 'center', sm: 'center' },
+              pb: 1,  // Add padding bottom
+              borderBottom: '1px solid',  // Add border
+              borderColor: 'primary.main',  // Match the text color
+              mb: 2  // Add margin bottom
             }}
           >
             Best Practices
@@ -111,7 +115,11 @@ const Instructions: React.FC = () => {
             gutterBottom
             sx={{ 
               fontSize: { xs: '1.1rem', sm: '1.25rem' },
-              textAlign: { xs: 'center', sm: 'left' }
+              textAlign: { xs: 'center', sm: 'center' },
+              pb: 1,  // Add padding bottom
+              borderBottom: '1px solid',  // Add border
+              borderColor: 'primary.main',  // Match the text color
+              mb: 2  // Add margin bottom
             }}
           >
             Simple Steps
@@ -197,7 +205,11 @@ const Instructions: React.FC = () => {
             gutterBottom
             sx={{ 
               fontSize: { xs: '1.1rem', sm: '1.25rem' },
-              textAlign: { xs: 'center', sm: 'left' }
+              textAlign: { xs: 'center', sm: 'center' },
+              pb: 1,  // Add padding bottom
+              borderBottom: '1px solid',  // Add border
+              borderColor: 'primary.main',  // Match the text color
+              mb: 2  // Add margin bottom
             }}
           >
             Common Issues
