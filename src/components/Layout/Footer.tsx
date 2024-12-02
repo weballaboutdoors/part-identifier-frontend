@@ -1,5 +1,7 @@
 import React from 'react';
 import { Box, Container, Typography, Link } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as MuiLink } from '@mui/material';
 
 const Footer: React.FC = () => {
   return (
@@ -85,8 +87,9 @@ const Footer: React.FC = () => {
               © {new Date().getFullYear()} AADW
             </Typography>
             <Box>
-              <Link 
-                href="/privacy-policy" 
+              <MuiLink 
+                component={RouterLink}
+                to="/privacy-policy" 
                 sx={{ 
                   color: '#FFFFFF', 
                   mr: 2, 
@@ -97,9 +100,10 @@ const Footer: React.FC = () => {
                 }}
               >
                 Privacy Policy
-              </Link>
-              <Link 
-                href="/terms-of-service" 
+              </MuiLink>
+              <MuiLink 
+                component={RouterLink}
+                to="/terms-of-service" 
                 sx={{ 
                   color: '#FFFFFF', 
                   textDecoration: 'none',
@@ -109,7 +113,7 @@ const Footer: React.FC = () => {
                 }}
               >
                 Terms of Service
-              </Link>
+              </MuiLink>
             </Box>
           </Box>
         </Box>

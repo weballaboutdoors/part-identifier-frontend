@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Typography, Paper, Box, Button } from '@mui/material';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const TermsOfService: React.FC = () => {
   const navigate = useNavigate();
@@ -9,7 +10,10 @@ const TermsOfService: React.FC = () => {
   return (
     <Container maxWidth="md">
       <Box sx={{ mt: 2 }}>
-        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/')}>
+        <Button component={Link} 
+          to="/"
+          startIcon={<ArrowBackIcon />}
+        >
           Back to Home
         </Button>
       </Box>

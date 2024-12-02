@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Typography, Paper, Box, Button } from '@mui/material';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const PrivacyPolicy: React.FC = () => {
     const navigate = useNavigate();
@@ -9,7 +9,11 @@ const PrivacyPolicy: React.FC = () => {
     return (
       <Container maxWidth="md">
         <Box sx={{ mt: 2 }}>
-          <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/')}>
+        <Button 
+          component={Link} 
+          to="/"           // Just "/" will work with the basename
+          startIcon={<ArrowBackIcon />}
+        >
             Back to Home
           </Button>
         </Box>
