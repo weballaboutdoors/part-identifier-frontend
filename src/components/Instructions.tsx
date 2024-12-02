@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Paper, List, ListItem, ListItemIcon, ListItemText, Grid } from '@mui/material';
+import { Box, Typography, Paper, List, ListItem, ListItemIcon, ListItemText, Grid, Link } from '@mui/material';
 import { PhotoCamera, Search, CheckCircle, Warning } from '@mui/icons-material';
 
 const Instructions: React.FC = () => {
@@ -121,7 +121,21 @@ const Instructions: React.FC = () => {
       <Grid item xs={12}>
         <Box sx={{ textAlign: 'center', mt: 1 }}>
           <Typography variant="subtitle2" color="text.primary">
-            Need Help? Try taking multiple photos from different angles or contact support.
+            Need Help? Try taking multiple photos from different angles or{' '}
+            <Link
+              href="tel:+18162216543"
+              sx={{
+                color: 'primary.main',
+                textDecoration: 'none',
+                '&:hover': {
+                  textDecoration: 'underline',
+                  color: 'primary.dark'
+                }
+              }}
+            >
+              contact support
+            </Link>
+            .
           </Typography>
         </Box>
       </Grid>
