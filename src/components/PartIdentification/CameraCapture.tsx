@@ -55,14 +55,14 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
         sx={{ 
           width: '100%',
           maxWidth: {
-            xs: '100%',    // Full width on mobile
-            sm: '600px',   // Tablet
-            md: '800px'    // Desktop
+            xs: '100%',    
+            sm: '600px',   
+            md: '800px'    
           },
           height: {
-            xs: '300px',   // Smaller height on mobile
-            sm: '400px',   // Tablet
-            md: '450px'    // Desktop
+            xs: '300px',   
+            sm: '400px',   
+            md: '450px'    
           },
           position: 'relative',
           overflow: 'hidden',
@@ -99,8 +99,8 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
             borderRadius: '50%',
             p: 1,
             width: {
-              xs: '36px',  // Smaller on mobile
-              sm: '48px'   // Larger on tablet/desktop
+              xs: '36px',
+              sm: '48px'
             },
             height: {
               xs: '36px',
@@ -115,64 +115,104 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
       <Box sx={{ 
         display: 'flex', 
         gap: 2,
-        flexDirection: {
-          xs: 'column',  // Stack buttons vertically on mobile
-          sm: 'row'      // Side by side on tablet/desktop
-        }
+        flexDirection: 'row',  // Changed to always be row
+        justifyContent: 'center'
       }}>
         <Button
           variant="contained"
           color="primary"
-          startIcon={isLoading ? <CircularProgress size={24} color="inherit" /> : <CameraAlt />}
           onClick={handleCapture}
           disabled={isLoading}
           sx={{
             width: {
-              xs: '160px',  // Smaller on mobile
-              sm: '190px'   // Larger on tablet/desktop
+              xs: '56px',     // Circle on mobile
+              sm: '190px'     // Regular width on desktop
             },
             height: {
-              xs: '50px',   // Smaller on mobile
-              sm: '65px'    // Larger on tablet/desktop
+              xs: '56px',     // Circle on mobile
+              sm: '65px'      // Regular height on desktop
+            },
+            borderRadius: {
+              xs: '50%',      // Circle on mobile
+              sm: '4px'       // Regular corners on desktop
+            },
+            minWidth: {
+              xs: '56px',
+              sm: '190px'
             },
             textTransform: 'none',
             fontSize: '1rem',
-            flexDirection: 'column',
-            '& .MuiButton-startIcon': {
-              margin: 0,
-              fontSize: '2rem',
-              marginBottom: .25
-            }
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}
         >
-          Capture
+          {isLoading ? (
+            <CircularProgress size={24} color="inherit" />
+          ) : (
+            <>
+              <CameraAlt sx={{ 
+                fontSize: {
+                  xs: '1.8rem',
+                  sm: '2rem'
+                }
+              }} />
+              <Box 
+                component="span"
+                sx={{ 
+                  display: { xs: 'none', sm: 'block' },
+                  ml: { sm: 1 }
+                }}
+              >
+                Capture
+              </Box>
+            </>
+          )}
         </Button>
 
         <Button
           variant="contained"
           color="primary"
-          startIcon={<UploadIcon />}
           component="label"
           sx={{
             width: {
-              xs: '160px',
-              sm: '190px'
+              xs: '56px',     // Circle on mobile
+              sm: '190px'     // Regular width on desktop
             },
             height: {
-              xs: '50px',
-              sm: '65px'
+              xs: '56px',     // Circle on mobile
+              sm: '65px'      // Regular height on desktop
+            },
+            borderRadius: {
+              xs: '50%',      // Circle on mobile
+              sm: '4px'       // Regular corners on desktop
+            },
+            minWidth: {
+              xs: '56px',
+              sm: '190px'
             },
             textTransform: 'none',
             fontSize: '1rem',
-            flexDirection: 'column',
-            '& .MuiButton-startIcon': {
-              margin: 0,
-              fontSize: '2rem',
-              marginBottom: .25
-            }
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}
         >
-          Upload
+          <UploadIcon sx={{ 
+            fontSize: {
+              xs: '1.8rem',
+              sm: '2rem'
+            }
+          }} />
+          <Box 
+            component="span"
+            sx={{ 
+              display: { xs: 'none', sm: 'block' },
+              ml: { sm: 1 }
+            }}
+          >
+            Upload
+          </Box>
           <input
             type="file"
             hidden
