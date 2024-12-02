@@ -3,22 +3,27 @@ import { Container, Typography, Paper, Box, Button } from '@mui/material';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom';
+import { Home as HomeIcon } from '@mui/icons-material';
 
 const TermsOfService: React.FC = () => {
   const navigate = useNavigate();
 
   return (
     <Container maxWidth="md">
-      <Box sx={{ mt: { xs: 1, sm: 2 } }}>
+      <Box sx={{ 
+        mt: { xs: 1, sm: 2 },
+        display: 'flex',
+        justifyContent: { xs: 'center', sm: 'flex-start' }
+      }}>
         <Button 
           component={Link} 
           to="/"
-          startIcon={<ArrowBackIcon />}
           sx={{ 
-            fontSize: { xs: '0.875rem', sm: '1rem' }
+            minWidth: 0,
+            p: { xs: 1, sm: 1.5 }
           }}
         >
-          Back to Home
+          <HomeIcon sx={{ fontSize: { xs: '1.5rem', sm: '1.75rem' } }} />
         </Button>
       </Box>
       <Paper elevation={15} sx={{ 

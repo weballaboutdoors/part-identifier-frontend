@@ -2,24 +2,29 @@ import React from 'react';
 import { Container, Typography, Paper, Box, Button } from '@mui/material';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 import { Link, useNavigate } from 'react-router-dom';
+import { Home as HomeIcon } from '@mui/icons-material';
 
 const PrivacyPolicy: React.FC = () => {
     const navigate = useNavigate();
   
     return (
       <Container maxWidth="md">
-        <Box sx={{ mt: { xs: 1, sm: 2 } }}>
-          <Button 
-            component={Link} 
-            to="/"
-            startIcon={<ArrowBackIcon />}
-            sx={{ 
-              fontSize: { xs: '0.875rem', sm: '1rem' }
-            }}
-          >
-            Back to Home
-          </Button>
-        </Box>
+        <Box sx={{ 
+        mt: { xs: 1, sm: 2 },
+        display: 'flex',
+        justifyContent: { xs: 'center', sm: 'flex-start' }
+      }}>
+        <Button 
+          component={Link} 
+          to="/"
+          sx={{ 
+            minWidth: 0,  // Allows the button to be more compact
+            p: { xs: 1, sm: 1.5 }
+          }}
+        >
+          <HomeIcon sx={{ fontSize: { xs: '1.5rem', sm: '1.75rem' } }} />
+        </Button>
+      </Box>
         <Paper elevation={15} sx={{ 
           p: { xs: 2, sm: 3, md: 4 }, 
           mt: { xs: 1, sm: 2 },
