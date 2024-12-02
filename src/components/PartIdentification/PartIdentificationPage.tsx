@@ -7,7 +7,7 @@ import ResultDisplay from './ResultDisplay';
 import Instructions from '../../components/Instructions';
 import { identifyPart } from '../../services/api';
 import { Refresh as RefreshIcon, Search as SearchIcon } from '@mui/icons-material';
-const steps = ['Capture/Upload', 'Review Image', 'View Results'];
+const steps = ['Capture / Upload', 'Review Image', 'View Results'];
 
 const PartIdentificationPage: React.FC = () => {
   console.log('PartIdentificationPage rendering');
