@@ -49,18 +49,41 @@ const PartIdentificationPage: React.FC = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-
       <Paper sx={{ p: 2, mb: 3, backgroundColor: '#f5f5f5' }}>
-        <Typography variant="body2" align="center" color="text.primary">
-          If you have any concerns using this service, please review our{' '}
+        <Typography variant="body2" align="center" color="text.secondary">
+          Before using this service, please review our{' '}
           <MuiLink component={Link} to="/terms-of-service">Terms of Service</MuiLink>{' '}
           and{' '}
           <MuiLink component={Link} to="/privacy-policy">Privacy Policy</MuiLink>.
         </Typography>
       </Paper>
 
-      <Paper sx={{ p: 3, mb: 3 }}>
-        <Stepper activeStep={activeStep} sx={{ mb: 4 }}>
+      <Paper sx={{ 
+        p: { xs: 2, sm: 3 },  // Less padding on mobile
+        mb: 3 
+      }}>
+        <Stepper 
+          activeStep={activeStep} 
+          sx={{ 
+            mb: { xs: 2, sm: 4 },
+            '& .MuiStepLabel-label': {
+              // Adjust text size for mobile
+              typography: { xs: 'caption', sm: 'body2' },
+              mt: { xs: 0.5, sm: 1 }
+            },
+            // Make stepper more compact on mobile
+            '& .MuiStep-root': {
+              px: { xs: 0.5, sm: 1 }
+            },
+            // Adjust connector width
+            '& .MuiStepConnector-line': {
+              borderColor: 'grey.400',
+              minHeight: { xs: '1px', sm: '2px' },  // Reduced line height
+              position: 'relative',
+              top: { xs: '8px', sm: '5px' }      // Adjust vertical position
+            },
+          }}
+        >
           {steps.map((label) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
@@ -78,7 +101,14 @@ const PartIdentificationPage: React.FC = () => {
           <Stack 
             spacing={2} 
             alignItems="center"
-            sx={{ width: '100%', maxWidth: 400, margin: '0 auto' }}
+            sx={{ 
+              width: '100%', 
+              maxWidth: {
+                xs: '100%',
+                sm: '400px'
+              }, 
+              margin: '0 auto' 
+            }}
           >
             <CameraCapture onCapture={handleImageCapture} />
             <ImageUpload onImageSelect={handleImageUpload} />
@@ -90,18 +120,27 @@ const PartIdentificationPage: React.FC = () => {
             display: 'flex', 
             flexDirection: 'column', 
             alignItems: 'center',
-            gap: 3,
-            maxWidth: '800px',
+            gap: { xs: 2, sm: 3 },
+            maxWidth: {
+              xs: '100%',
+              sm: '800px'
+            },
             margin: '0 auto'
           }}>
-            <Typography variant="h6" color="text.secondary">
+            <Typography 
+              variant="h6" 
+              color="text.secondary"
+              sx={{
+                fontSize: { xs: '1rem', sm: '1.25rem' }
+              }}
+            >
               Review Your Image
             </Typography>
 
             <Paper 
-              elevation={15} 
+              elevation={3} 
               sx={{ 
-                p: 2, 
+                p: { xs: 1, sm: 2 }, 
                 width: '100%',
                 backgroundColor: '#f8f8f8',
                 borderRadius: 2
@@ -119,20 +158,32 @@ const PartIdentificationPage: React.FC = () => {
               />
             </Paper>
 
-            <Typography variant="body2" color="text.secondary">
+            <Typography 
+              variant="body2" 
+              color="text.secondary"
+              align="center"
+              sx={{
+                px: { xs: 2, sm: 0 }
+              }}
+            >
               Please ensure the image is clear and well-lit before proceeding
             </Typography>
 
             <Box sx={{ 
               display: 'flex', 
-              gap: 2,
-              justifyContent: 'center'
+              gap: { xs: 1, sm: 2 },
+              flexDirection: { xs: 'column', sm: 'row' },
+              width: { xs: '100%', sm: 'auto' }
             }}>
               <Button 
                 variant="outlined"
                 color="primary"
                 onClick={() => setActiveStep(0)}
                 startIcon={<RefreshIcon />}
+                fullWidth={true}
+                sx={{
+                  minWidth: { xs: '100%', sm: '150px' }
+                }}
               >
                 Retake Photo
               </Button>
@@ -141,13 +192,17 @@ const PartIdentificationPage: React.FC = () => {
                 variant="contained" 
                 onClick={() => handleIdentification(capturedImage)}
                 startIcon={<SearchIcon />}
-                sx={{ minWidth: '150px' }}
+                fullWidth={true}
+                sx={{
+                  minWidth: { xs: '100%', sm: '150px' }
+                }}
               >
                 Identify Part
               </Button>
             </Box>
           </Box>
         )}
+
         {activeStep === 2 && identificationResult && (
           <ResultDisplay 
             identificationResult={identificationResult} 
@@ -156,12 +211,10 @@ const PartIdentificationPage: React.FC = () => {
         )}
       </Paper>
 
-      {/* Instructions at the bottom */}
       <Box sx={{ mt: 4 }}>
         <Instructions />
       </Box>
     </Box>
   );
 };
-
 export default PartIdentificationPage;
