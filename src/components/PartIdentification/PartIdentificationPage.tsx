@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Box, Paper, Stepper, Step, StepLabel, Typography, Button, Stack } from '@mui/material';
+import { Box, Paper, Stepper, Step, StepLabel, Typography, Button, Stack, Link as MuiLink } from '@mui/material';
+import { Link } from 'react-router-dom';
 import CameraCapture from './CameraCapture';
 import ImageUpload from './ImageUpload';
 import ResultDisplay from './ResultDisplay';
 import Instructions from '../../components/Instructions';
 import { identifyPart } from '../../services/api';
-
-const steps = ['Take/Upload', 'Review Image', 'View Results'];
+import { Refresh as RefreshIcon, Search as SearchIcon } from '@mui/icons-material';
+const steps = ['Capture/Upload', 'Review Image', 'View Results'];
 
 const PartIdentificationPage: React.FC = () => {
   console.log('PartIdentificationPage rendering');
@@ -48,6 +49,16 @@ const PartIdentificationPage: React.FC = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
+
+      <Paper sx={{ p: 2, mb: 3, backgroundColor: '#f5f5f5' }}>
+        <Typography variant="body2" align="center" color="text.primary">
+          If you have any concerns using this service, please review our{' '}
+          <MuiLink component={Link} to="/terms-of-service">Terms of Service</MuiLink>{' '}
+          and{' '}
+          <MuiLink component={Link} to="/privacy-policy">Privacy Policy</MuiLink>.
+        </Typography>
+      </Paper>
+
       <Paper sx={{ p: 3, mb: 3 }}>
         <Stepper activeStep={activeStep} sx={{ mb: 4 }}>
           {steps.map((label) => (
@@ -63,7 +74,7 @@ const PartIdentificationPage: React.FC = () => {
           </Typography>
         )}
 
-{activeStep === 0 && (
+        {activeStep === 0 && (
           <Stack 
             spacing={2} 
             alignItems="center"
@@ -75,15 +86,66 @@ const PartIdentificationPage: React.FC = () => {
         )}
 
         {activeStep === 1 && capturedImage && (
-          <Box sx={{ textAlign: 'center' }}>
-            <img src={capturedImage} alt="Captured part" style={{ maxWidth: '100%', maxHeight: '400px' }} />
-            <Button 
-              variant="contained" 
-              onClick={() => handleIdentification(capturedImage)}
-              sx={{ mt: 2 }}
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center',
+            gap: 3,
+            maxWidth: '800px',
+            margin: '0 auto'
+          }}>
+            <Typography variant="h6" color="text.secondary">
+              Review Your Image
+            </Typography>
+
+            <Paper 
+              elevation={15} 
+              sx={{ 
+                p: 2, 
+                width: '100%',
+                backgroundColor: '#f8f8f8',
+                borderRadius: 2
+              }}
             >
-              Identify Part
-            </Button>
+              <img 
+                src={capturedImage} 
+                alt="Captured part" 
+                style={{ 
+                  width: '100%',
+                  height: 'auto',
+                  borderRadius: '4px',
+                  display: 'block'
+                }} 
+              />
+            </Paper>
+
+            <Typography variant="body2" color="text.secondary">
+              Please ensure the image is clear and well-lit before proceeding
+            </Typography>
+
+            <Box sx={{ 
+              display: 'flex', 
+              gap: 2,
+              justifyContent: 'center'
+            }}>
+              <Button 
+                variant="outlined"
+                color="primary"
+                onClick={() => setActiveStep(0)}
+                startIcon={<RefreshIcon />}
+              >
+                Retake Photo
+              </Button>
+              
+              <Button 
+                variant="contained" 
+                onClick={() => handleIdentification(capturedImage)}
+                startIcon={<SearchIcon />}
+                sx={{ minWidth: '150px' }}
+              >
+                Identify Part
+              </Button>
+            </Box>
           </Box>
         )}
         {activeStep === 2 && identificationResult && (

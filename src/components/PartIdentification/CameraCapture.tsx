@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Box, Button, CircularProgress, Paper } from '@mui/material';
-import { CameraAlt, Cameraswitch } from '@mui/icons-material';
+import { CameraAlt, Cameraswitch, Upload as UploadIcon } from '@mui/icons-material';
 import Webcam from 'react-webcam';
 
 interface CameraCaptureProps {
@@ -31,45 +31,111 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
     setIsFrontCamera(!isFrontCamera);
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        onCapture(base64String); // Using the same onCapture for uploaded images
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Paper 
-        elevation={3} 
+        elevation={15} 
         sx={{ 
-          p: 2, 
-          mb: 3, 
-          width: '100%', 
-          maxWidth: 640,
-          position: 'relative' 
+          width: '100%',
+          maxWidth: '1024px',
+          height: '576px',
+          position: 'relative',
+          overflow: 'hidden',
+          backgroundColor: '#000',
+          borderRadius: 2,
+          mb: 3
         }}
       >
         <Webcam
           ref={webcamRef}
+          audio={false}
           screenshotFormat="image/jpeg"
-          videoConstraints={videoConstraints}
-          style={{ width: '100%', height: 'auto' }}
+          videoConstraints={{
+            ...videoConstraints,
+            width: 1920,          // Increased resolution
+            height: 1080         // Increased resolution
+          }}
+          style={{ 
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover'
+          }}
         />
         
         <Button
           variant="contained"
           color="primary"
           onClick={toggleCamera}
-          sx={{ position: 'absolute', top: 16, right: 16 }}
+          sx={{ 
+            position: 'absolute', 
+            top: 16, 
+            right: 16,
+            minWidth: 'auto',
+            borderRadius: '50%',
+            p: 1
+          }}
         >
           <Cameraswitch />
         </Button>
       </Paper>
 
-      <Button
-        variant="contained"
-        color="primary"
-        startIcon={isLoading ? <CircularProgress size={24} color="inherit" /> : <CameraAlt />}
-        onClick={handleCapture}
-        disabled={isLoading}
-        sx={{ width: 200 }}
-      >
-        Capture Image
-      </Button>
+      <Box sx={{ display: 'flex', gap: 2 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={isLoading ? <CircularProgress size={24} color="inherit" /> : <CameraAlt />}
+          onClick={handleCapture}
+          disabled={isLoading}
+          sx={{
+            width: 190,
+            height: 65,
+            textTransform: 'none',
+            fontSize: '1rem',
+            flexDirection: 'column',
+            '& .MuiButton-startIcon': {
+              margin: 0,
+              fontSize: '2rem',
+              marginBottom: .25
+            }
+          }}
+        >
+          Capture
+        </Button>
+
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<UploadIcon />}
+          component="label"
+          sx={{
+            width: 190,
+            height: 65,
+            textTransform: 'none',
+            fontSize: '1rem',
+            flexDirection: 'column',
+            '& .MuiButton-startIcon': {
+              margin: 0,
+              fontSize: '2rem',
+              marginBottom: .25
+            }
+          }}
+        >
+          Upload
+          <input type="file" accept="image/*" onChange={handleFileChange} hidden />
+        </Button>
+      </Box>
     </Box>
   );
 };

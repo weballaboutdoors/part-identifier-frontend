@@ -4,10 +4,10 @@ import { PhotoCamera, Search, CheckCircle, Warning } from '@mui/icons-material';
 
 const Instructions: React.FC = () => {
   return (
-    <Grid container spacing={3} sx={{ mb: 4 }}>
+    <Grid container spacing={3} sx={{ mb: 2 }}>
       {/* All Three Boxes in One Row */}
       <Grid item xs={12} md={4}>
-        <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
+        <Paper elevation={15} sx={{ p: 3, height: '92%' }}>
           <Typography variant="h6" color="secondary" gutterBottom>
             Best Practices
           </Typography>
@@ -44,7 +44,7 @@ const Instructions: React.FC = () => {
       </Grid>
 
       <Grid item xs={12} md={4}>
-        <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
+        <Paper elevation={15} sx={{ p: 3, height: '92%' }}>
           <Typography variant="h6" color="primary" gutterBottom>
             Simple Steps
           </Typography>
@@ -81,7 +81,7 @@ const Instructions: React.FC = () => {
       </Grid>
 
       <Grid item xs={12} md={4}>
-        <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
+        <Paper elevation={15} sx={{ p: 3, height: '92%' }}>
           <Typography variant="h6" color="error" gutterBottom>
             Common Issues
           </Typography>
@@ -119,7 +119,7 @@ const Instructions: React.FC = () => {
 
       {/* Optional Help Text */}
       <Grid item xs={12}>
-        <Box sx={{ textAlign: 'center', mt: 2 }}>
+        <Box sx={{ textAlign: 'center', mt: 1 }}>
           <Typography variant="subtitle2" color="text.primary">
             Need Help? Try taking multiple photos from different angles or contact support.
           </Typography>

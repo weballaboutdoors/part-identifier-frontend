@@ -14,23 +14,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect }) => {
     }
   };
 
-  return (
-    <Button
-      variant="contained"
-      color="primary"
-      component="label"
-      startIcon={<UploadIcon />}
-      sx={{ width: 200, height: '40px', textTransform: 'none', fontSize: '1rem' }}
-    >
-      Upload Image
-      <input
-        type="file"
-        hidden
-        accept="image/*"
-        onChange={handleFileChange}
-      />
-    </Button>
-  );
+  return null;
 };
 
 export default ImageUpload;
