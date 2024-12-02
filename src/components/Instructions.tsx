@@ -4,16 +4,32 @@ import { PhotoCamera, Search, CheckCircle, Warning } from '@mui/icons-material';
 
 const Instructions: React.FC = () => {
   return (
-    <Grid container spacing={3} sx={{ mb: 2 }}>
+    <Grid container spacing={{ xs: 2, sm: 3 }} sx={{ mb: 2 }}>
       {/* All Three Boxes in One Row */}
       <Grid item xs={12} md={4}>
-        <Paper elevation={15} sx={{ p: 3, height: '92%' }}>
-          <Typography variant="h6" color="primary" gutterBottom>
+        <Paper elevation={15} sx={{ 
+          p: { xs: 2, sm: 3 }, 
+          height: '100%',
+          '& .MuiListItemText-primary': {
+            fontSize: { xs: '0.9rem', sm: '1rem' }
+          },
+          '& .MuiListItemText-secondary': {
+            fontSize: { xs: '0.8rem', sm: '0.875rem' }
+          }
+        }}>
+          <Typography 
+            variant="h6" 
+            color="primary" 
+            gutterBottom
+            sx={{ 
+              fontSize: { xs: '1.1rem', sm: '1.25rem' }
+            }}
+          >
             Best Practices
           </Typography>
-          <List>
-            <ListItem>
-              <ListItemIcon>
+          <List sx={{ py: 0 }}>
+            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
+              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
                 <CheckCircle color="success" />
               </ListItemIcon>
               <ListItemText 
@@ -21,8 +37,8 @@ const Instructions: React.FC = () => {
                 secondary="Well-lit with minimal shadows"
               />
             </ListItem>
-            <ListItem>
-              <ListItemIcon>
+            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
+              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
                 <CheckCircle color="success" />
               </ListItemIcon>
               <ListItemText 
@@ -30,8 +46,8 @@ const Instructions: React.FC = () => {
                 secondary="Use plain, light background"
               />
             </ListItem>
-            <ListItem>
-              <ListItemIcon>
+            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
+              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
                 <CheckCircle color="success" />
               </ListItemIcon>
               <ListItemText 
@@ -44,13 +60,29 @@ const Instructions: React.FC = () => {
       </Grid>
 
       <Grid item xs={12} md={4}>
-        <Paper elevation={15} sx={{ p: 3, height: '92%' }}>
-          <Typography variant="h6" color="primary" gutterBottom>
+        <Paper elevation={15} sx={{ 
+          p: { xs: 2, sm: 3 }, 
+          height: '100%',
+          '& .MuiListItemText-primary': {
+            fontSize: { xs: '0.9rem', sm: '1rem' }
+          },
+          '& .MuiListItemText-secondary': {
+            fontSize: { xs: '0.8rem', sm: '0.875rem' }
+          }
+        }}>
+          <Typography 
+            variant="h6" 
+            color="primary" 
+            gutterBottom
+            sx={{ 
+              fontSize: { xs: '1.1rem', sm: '1.25rem' }
+            }}
+          >
             Simple Steps
           </Typography>
-          <List>
-            <ListItem>
-              <ListItemIcon>
+          <List sx={{ py: 0 }}>
+            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
+              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
                 <PhotoCamera color="primary" />
               </ListItemIcon>
               <ListItemText 
@@ -58,8 +90,8 @@ const Instructions: React.FC = () => {
                 secondary="Upload clear image of part"
               />
             </ListItem>
-            <ListItem>
-              <ListItemIcon>
+            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
+              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
                 <Search color="primary" />
               </ListItemIcon>
               <ListItemText 
@@ -67,8 +99,8 @@ const Instructions: React.FC = () => {
                 secondary="Check suggested matches"
               />
             </ListItem>
-            <ListItem>
-              <ListItemIcon>
+            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
+              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
                 <CheckCircle color="primary" />
               </ListItemIcon>
               <ListItemText 
@@ -81,13 +113,29 @@ const Instructions: React.FC = () => {
       </Grid>
 
       <Grid item xs={12} md={4}>
-        <Paper elevation={15} sx={{ p: 3, height: '92%' }}>
-          <Typography variant="h6" color="error" gutterBottom>
+        <Paper elevation={15} sx={{ 
+          p: { xs: 2, sm: 3 }, 
+          height: '100%',
+          '& .MuiListItemText-primary': {
+            fontSize: { xs: '0.9rem', sm: '1rem' }
+          },
+          '& .MuiListItemText-secondary': {
+            fontSize: { xs: '0.8rem', sm: '0.875rem' }
+          }
+        }}>
+          <Typography 
+            variant="h6" 
+            color="error" 
+            gutterBottom
+            sx={{ 
+              fontSize: { xs: '1.1rem', sm: '1.25rem' }
+            }}
+          >
             Common Issues
           </Typography>
-          <List>
-            <ListItem>
-              <ListItemIcon>
+          <List sx={{ py: 0 }}>
+            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
+              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
                 <Warning color="error" />
               </ListItemIcon>
               <ListItemText 
@@ -95,8 +143,8 @@ const Instructions: React.FC = () => {
                 secondary="Avoid blurry/dark images"
               />
             </ListItem>
-            <ListItem>
-              <ListItemIcon>
+            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
+              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
                 <Warning color="error" />
               </ListItemIcon>
               <ListItemText 
@@ -104,8 +152,8 @@ const Instructions: React.FC = () => {
                 secondary="One part per image only"
               />
             </ListItem>
-            <ListItem>
-              <ListItemIcon>
+            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
+              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
                 <Warning color="error" />
               </ListItemIcon>
               <ListItemText 
@@ -119,8 +167,18 @@ const Instructions: React.FC = () => {
 
       {/* Optional Help Text */}
       <Grid item xs={12}>
-        <Box sx={{ textAlign: 'center', mt: 1 }}>
-          <Typography variant="subtitle2" color="text.primary">
+        <Box sx={{ 
+          textAlign: 'center', 
+          mt: { xs: 0.5, sm: 1 },
+          px: { xs: 2, sm: 0 }
+        }}>
+          <Typography 
+            variant="subtitle2" 
+            color="text.primary"
+            sx={{ 
+              fontSize: { xs: '0.75rem', sm: '0.875rem' }
+            }}
+          >
             Need Help? Try taking multiple photos from different angles or{' '}
             <Link
               href="tel:+18162216543"
