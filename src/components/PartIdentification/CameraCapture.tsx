@@ -44,13 +44,26 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center',
+      width: '100%'
+    }}>
       <Paper 
         elevation={15} 
         sx={{ 
           width: '100%',
-          maxWidth: '1024px',
-          height: '576px',
+          maxWidth: {
+            xs: '100%',    // Full width on mobile
+            sm: '600px',   // Tablet
+            md: '800px'    // Desktop
+          },
+          height: {
+            xs: '300px',   // Smaller height on mobile
+            sm: '400px',   // Tablet
+            md: '450px'    // Desktop
+          },
           position: 'relative',
           overflow: 'hidden',
           backgroundColor: '#000',
@@ -64,8 +77,8 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
           screenshotFormat="image/jpeg"
           videoConstraints={{
             ...videoConstraints,
-            width: 1920,          // Increased resolution
-            height: 1080         // Increased resolution
+            width: 1920,
+            height: 1080
           }}
           style={{ 
             width: '100%',
@@ -84,14 +97,29 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
             right: 16,
             minWidth: 'auto',
             borderRadius: '50%',
-            p: 1
+            p: 1,
+            width: {
+              xs: '36px',  // Smaller on mobile
+              sm: '48px'   // Larger on tablet/desktop
+            },
+            height: {
+              xs: '36px',
+              sm: '48px'
+            }
           }}
         >
           <Cameraswitch />
         </Button>
       </Paper>
 
-      <Box sx={{ display: 'flex', gap: 2 }}>
+      <Box sx={{ 
+        display: 'flex', 
+        gap: 2,
+        flexDirection: {
+          xs: 'column',  // Stack buttons vertically on mobile
+          sm: 'row'      // Side by side on tablet/desktop
+        }
+      }}>
         <Button
           variant="contained"
           color="primary"
@@ -99,8 +127,14 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
           onClick={handleCapture}
           disabled={isLoading}
           sx={{
-            width: 190,
-            height: 65,
+            width: {
+              xs: '160px',  // Smaller on mobile
+              sm: '190px'   // Larger on tablet/desktop
+            },
+            height: {
+              xs: '50px',   // Smaller on mobile
+              sm: '65px'    // Larger on tablet/desktop
+            },
             textTransform: 'none',
             fontSize: '1rem',
             flexDirection: 'column',
@@ -120,8 +154,14 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
           startIcon={<UploadIcon />}
           component="label"
           sx={{
-            width: 190,
-            height: 65,
+            width: {
+              xs: '160px',
+              sm: '190px'
+            },
+            height: {
+              xs: '50px',
+              sm: '65px'
+            },
             textTransform: 'none',
             fontSize: '1rem',
             flexDirection: 'column',
@@ -133,7 +173,12 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
           }}
         >
           Upload
-          <input type="file" accept="image/*" onChange={handleFileChange} hidden />
+          <input
+            type="file"
+            hidden
+            accept="image/*"
+            onChange={handleFileChange}
+          />
         </Button>
       </Box>
     </Box>
