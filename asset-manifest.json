@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/part-identifier-frontend/static/js/main.207c5d1c.js",
+    "main.js": "/part-identifier-frontend/static/js/main.a38c0e55.js",
     "static/media/logo3.png": "/part-identifier-frontend/static/media/logo3.6167f5f4641f85723fc3.png",
     "index.html": "/part-identifier-frontend/index.html",
-    "main.207c5d1c.js.map": "/part-identifier-frontend/static/js/main.207c5d1c.js.map"
+    "main.a38c0e55.js.map": "/part-identifier-frontend/static/js/main.a38c0e55.js.map"
   },
   "entrypoints": [
-    "static/js/main.207c5d1c.js"
+    "static/js/main.a38c0e55.js"
   ]
 }
