@@ -17,43 +17,38 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         minHeight: '100vh'  // Make sure the page takes at least full viewport height
       }}
     >
-      <AppBar position="static" sx={{ height: '210px' }}>
+      <AppBar position="static" sx={{ 
+        height: { 
+          xs: '150px',  // smaller height on mobile
+          sm: '180px',  // medium height on tablet
+          md: '210px'   // original height on desktop
+        } 
+      }}>
         <Toolbar sx={{ justifyContent: 'center' }}>
           <Stack 
             direction="row" 
             alignItems="center" 
             spacing={2}
           >
-            <Box 
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '56px 16px 16px 16px',
-                }}
-            ></Box>
-            <img 
+            <Box
+              component="img"
               src={logo} 
               alt="Company Logo" 
-              style={{
-                height: '200px',
+              sx={{
+                height: 'auto',
                 width: 'auto',
-                marginRight: '16px',
-                padding: '5px',
+                maxHeight: {
+                  xs: '140px',  // smaller logo on mobile
+                  sm: '150px',  // medium logo on tablet
+                  md: '200px'   // original size on desktop
+                },
+                padding: {
+                  xs: '3px',    // less padding on mobile
+                  sm: '4px',
+                  md: '5px'
+                }
               }}
             />
-            <Stack alignItems="center">
-              <Typography 
-                variant="h6" 
-                sx={{ 
-                  fontWeight: 500,
-                  letterSpacing: '0.5px',
-                  fontSize: '1.25rem',
-                }}
-              >
-                
-              </Typography>
-            </Stack>
           </Stack>
         </Toolbar>
       </AppBar>
