@@ -8,7 +8,7 @@ const Instructions: React.FC = () => {
       {/* All Three Boxes in One Row */}
       <Grid item xs={12} md={4}>
         <Paper elevation={15} sx={{ p: 3, height: '92%' }}>
-          <Typography variant="h6" color="secondary" gutterBottom>
+          <Typography variant="h6" color="primary" gutterBottom>
             Best Practices
           </Typography>
           <List>
