@@ -220,7 +220,7 @@ const TermsOfService: React.FC = () => {
           paragraph
           sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
         >
-          For any questions about these Terms, please contact us at (816) 221-6543
+          For any questions about these Terms, please contact us at (816) 221-6543.
         </Typography>
       </Paper>
     </Container>

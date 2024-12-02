@@ -207,7 +207,7 @@ const PrivacyPolicy: React.FC = () => {
             paragraph
             sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}
           >
-            For any privacy-related questions or concerns, please contact us at (816) 221-6543
+            For any privacy-related questions or concerns, please contact us at (816) 221-6543.
           </Typography>
         </Paper>
       </Container>
