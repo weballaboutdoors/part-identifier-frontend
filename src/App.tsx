@@ -18,7 +18,7 @@ function App() {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Router>
+        <Router basename="/part-identifier-frontend">
           <Layout>
             <Routes>
               <Route path="/" element={<PartIdentificationPage />} />
