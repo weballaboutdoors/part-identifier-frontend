@@ -11,10 +11,12 @@ const Instructions: React.FC = () => {
           p: { xs: 2, sm: 3 }, 
           height: '100%',
           '& .MuiListItemText-primary': {
-            fontSize: { xs: '0.9rem', sm: '1rem' }
+            fontSize: { xs: '0.9rem', sm: '1rem' },
+            textAlign: { xs: 'center', sm: 'left' }
           },
           '& .MuiListItemText-secondary': {
-            fontSize: { xs: '0.8rem', sm: '0.875rem' }
+            fontSize: { xs: '0.8rem', sm: '0.875rem' },
+            textAlign: { xs: 'center', sm: 'left' }
           }
         }}>
           <Typography 
@@ -22,14 +24,25 @@ const Instructions: React.FC = () => {
             color="primary" 
             gutterBottom
             sx={{ 
-              fontSize: { xs: '1.1rem', sm: '1.25rem' }
+              fontSize: { xs: '1.1rem', sm: '1.25rem' },
+              textAlign: { xs: 'center', sm: 'left' }
             }}
           >
             Best Practices
           </Typography>
           <List sx={{ py: 0 }}>
-            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
-              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
+            <ListItem 
+              sx={{ 
+                px: { xs: 1, sm: 2 },
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: 'center',
+                gap: { xs: 1, sm: 0 }
+              }}
+            >
+              <ListItemIcon sx={{ 
+                minWidth: { xs: 'auto', sm: 40 },
+                mb: { xs: 0.5, sm: 0 }
+              }}>
                 <CheckCircle color="success" />
               </ListItemIcon>
               <ListItemText 
@@ -37,8 +50,18 @@ const Instructions: React.FC = () => {
                 secondary="Well-lit with minimal shadows"
               />
             </ListItem>
-            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
-              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
+            <ListItem 
+              sx={{ 
+                px: { xs: 1, sm: 2 },
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: 'center',
+                gap: { xs: 1, sm: 0 }
+              }}
+            >
+              <ListItemIcon sx={{ 
+                minWidth: { xs: 'auto', sm: 40 },
+                mb: { xs: 0.5, sm: 0 }
+              }}>
                 <CheckCircle color="success" />
               </ListItemIcon>
               <ListItemText 
@@ -46,8 +69,18 @@ const Instructions: React.FC = () => {
                 secondary="Use plain, light background"
               />
             </ListItem>
-            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
-              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
+            <ListItem 
+              sx={{ 
+                px: { xs: 1, sm: 2 },
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: 'center',
+                gap: { xs: 1, sm: 0 }
+              }}
+            >
+              <ListItemIcon sx={{ 
+                minWidth: { xs: 'auto', sm: 40 },
+                mb: { xs: 0.5, sm: 0 }
+              }}>
                 <CheckCircle color="success" />
               </ListItemIcon>
               <ListItemText 
@@ -64,10 +97,12 @@ const Instructions: React.FC = () => {
           p: { xs: 2, sm: 3 }, 
           height: '100%',
           '& .MuiListItemText-primary': {
-            fontSize: { xs: '0.9rem', sm: '1rem' }
+            fontSize: { xs: '0.9rem', sm: '1rem' },
+            textAlign: { xs: 'center', sm: 'left' }
           },
           '& .MuiListItemText-secondary': {
-            fontSize: { xs: '0.8rem', sm: '0.875rem' }
+            fontSize: { xs: '0.8rem', sm: '0.875rem' },
+            textAlign: { xs: 'center', sm: 'left' }
           }
         }}>
           <Typography 
@@ -75,14 +110,25 @@ const Instructions: React.FC = () => {
             color="primary" 
             gutterBottom
             sx={{ 
-              fontSize: { xs: '1.1rem', sm: '1.25rem' }
+              fontSize: { xs: '1.1rem', sm: '1.25rem' },
+              textAlign: { xs: 'center', sm: 'left' }
             }}
           >
             Simple Steps
           </Typography>
           <List sx={{ py: 0 }}>
-            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
-              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
+            <ListItem 
+              sx={{ 
+                px: { xs: 1, sm: 2 },
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: 'center',
+                gap: { xs: 1, sm: 0 }
+              }}
+            >
+              <ListItemIcon sx={{ 
+                minWidth: { xs: 'auto', sm: 40 },
+                mb: { xs: 0.5, sm: 0 }
+              }}>
                 <PhotoCamera color="primary" />
               </ListItemIcon>
               <ListItemText 
@@ -90,8 +136,18 @@ const Instructions: React.FC = () => {
                 secondary="Upload clear image of part"
               />
             </ListItem>
-            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
-              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
+            <ListItem 
+              sx={{ 
+                px: { xs: 1, sm: 2 },
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: 'center',
+                gap: { xs: 1, sm: 0 }
+              }}
+            >
+              <ListItemIcon sx={{ 
+                minWidth: { xs: 'auto', sm: 40 },
+                mb: { xs: 0.5, sm: 0 }
+              }}>
                 <Search color="primary" />
               </ListItemIcon>
               <ListItemText 
@@ -99,8 +155,18 @@ const Instructions: React.FC = () => {
                 secondary="Check suggested matches"
               />
             </ListItem>
-            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
-              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
+            <ListItem 
+              sx={{ 
+                px: { xs: 1, sm: 2 },
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: 'center',
+                gap: { xs: 1, sm: 0 }
+              }}
+            >
+              <ListItemIcon sx={{ 
+                minWidth: { xs: 'auto', sm: 40 },
+                mb: { xs: 0.5, sm: 0 }
+              }}>
                 <CheckCircle color="primary" />
               </ListItemIcon>
               <ListItemText 
@@ -117,10 +183,12 @@ const Instructions: React.FC = () => {
           p: { xs: 2, sm: 3 }, 
           height: '100%',
           '& .MuiListItemText-primary': {
-            fontSize: { xs: '0.9rem', sm: '1rem' }
+            fontSize: { xs: '0.9rem', sm: '1rem' },
+            textAlign: { xs: 'center', sm: 'left' }
           },
           '& .MuiListItemText-secondary': {
-            fontSize: { xs: '0.8rem', sm: '0.875rem' }
+            fontSize: { xs: '0.8rem', sm: '0.875rem' },
+            textAlign: { xs: 'center', sm: 'left' }
           }
         }}>
           <Typography 
@@ -128,14 +196,25 @@ const Instructions: React.FC = () => {
             color="error" 
             gutterBottom
             sx={{ 
-              fontSize: { xs: '1.1rem', sm: '1.25rem' }
+              fontSize: { xs: '1.1rem', sm: '1.25rem' },
+              textAlign: { xs: 'center', sm: 'left' }
             }}
           >
             Common Issues
           </Typography>
           <List sx={{ py: 0 }}>
-            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
-              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
+            <ListItem 
+              sx={{ 
+                px: { xs: 1, sm: 2 },
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: 'center',
+                gap: { xs: 1, sm: 0 }
+              }}
+            >
+              <ListItemIcon sx={{ 
+                minWidth: { xs: 'auto', sm: 40 },
+                mb: { xs: 0.5, sm: 0 }
+              }}>
                 <Warning color="error" />
               </ListItemIcon>
               <ListItemText 
@@ -143,8 +222,18 @@ const Instructions: React.FC = () => {
                 secondary="Avoid blurry/dark images"
               />
             </ListItem>
-            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
-              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
+            <ListItem 
+              sx={{ 
+                px: { xs: 1, sm: 2 },
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: 'center',
+                gap: { xs: 1, sm: 0 }
+              }}
+            >
+              <ListItemIcon sx={{ 
+                minWidth: { xs: 'auto', sm: 40 },
+                mb: { xs: 0.5, sm: 0 }
+              }}>
                 <Warning color="error" />
               </ListItemIcon>
               <ListItemText 
@@ -152,8 +241,18 @@ const Instructions: React.FC = () => {
                 secondary="One part per image only"
               />
             </ListItem>
-            <ListItem sx={{ px: { xs: 1, sm: 2 } }}>
-              <ListItemIcon sx={{ minWidth: { xs: 36, sm: 40 } }}>
+            <ListItem 
+              sx={{ 
+                px: { xs: 1, sm: 2 },
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: 'center',
+                gap: { xs: 1, sm: 0 }
+              }}
+            >
+              <ListItemIcon sx={{ 
+                minWidth: { xs: 'auto', sm: 40 },
+                mb: { xs: 0.5, sm: 0 }
+              }}>
                 <Warning color="error" />
               </ListItemIcon>
               <ListItemText 
