@@ -105,6 +105,13 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
             height: {
               xs: '36px',
               sm: '48px'
+            },
+            color: '#000000',
+            '& .MuiSvgIcon-root': {
+              color: '#000000',
+              '&:hover': {
+                color: '#000000'
+              }
             }
           }}
         >
@@ -139,6 +146,13 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
             minWidth: {
               xs: '56px',
               sm: '190px'
+            },
+            color: '#000000',
+            '&:hover': {
+              backgroundColor: '#42994b'
+            },
+            '& .MuiSvgIcon-root': {
+              color: '#000000'
             },
             textTransform: 'none',
             fontSize: '1rem',
@@ -190,6 +204,13 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture }) => {
             minWidth: {
               xs: '56px',
               sm: '190px'
+            },
+            color: '#000000',  // Black text and icon
+            '&:hover': {
+              backgroundColor: '#42994b'  // Slightly darker white on hover
+            },
+            '& .MuiSvgIcon-root': {  // Ensures icon is also black
+              color: '#000000'
             },
             textTransform: 'none',
             fontSize: '1rem',

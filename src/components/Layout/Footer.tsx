@@ -39,7 +39,7 @@ const Footer: React.FC = () => {
                   color: '#f5f9f5',  // Changed to mint/sage
                   textDecoration: 'none',
                   '&:hover': {
-                    color: '#2bdb09'
+                    color: '#48ad4d'
                   },
                   display: 'block',
                   mb: 1
@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
                   textDecoration: 'none',
                   color: '#f5f9f5',
                   '&:hover': {
-                    color: '#2bdb09'
+                    color: '#48ad4d'
                   },
                   display: 'block',
                   mb: 1
@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
                   color: '#f5f9f5',
                   textDecoration: 'none',
                   '&:hover': {
-                    color: '#2bdb09'
+                    color: '#48ad4d'
                   },
                   display: 'block'
                 }}
@@ -126,7 +126,7 @@ const Footer: React.FC = () => {
                     color: '#f5f9f5',
                     textDecoration: 'none',
                     '&:hover': {
-                      color: '#2bdb09'
+                      color: '#48ad4d'
                     }
                   }}
                 >
@@ -141,7 +141,7 @@ const Footer: React.FC = () => {
                     color: '#f5f9f5',
                     textDecoration: 'none',
                     '&:hover': {
-                      color: '#2bdb09'
+                      color: '#48ad4d'
                     }
                   }}
                 >

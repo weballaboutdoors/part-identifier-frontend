@@ -4,22 +4,22 @@ export const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#48ad4d',  // Main green color
-      light: '#6fcf70', // Lighter green for hover effects
-      dark: '#2c682f',  // Darker green for accents
+      main: '#48ad4d',  // Mint/sage green
+      light: '#2bdb09',  // Bright green for hover
+      dark: '#3d9241',   // Darker mint/sage
     },
     secondary: {
-      main: '#FF4081',  // You can keep this or adjust as needed
+      main: '#FF4081',
       light: '#FF80AB',
       dark: '#F50057',
     },
     background: {
-      default: '#f5f9f5',  // Very light mint/sage
-      paper: '#ffffff',    // White for paper elements
+      default: '#f5f9f5',
+      paper: '#ffffff',
     },
     text: {
-      primary: '#333333',  // Dark gray for primary text
-      secondary: '#757575', // Light gray for secondary text
+      primary: '#333333',
+      secondary: '#757575',
     },
   },
   typography: {
@@ -34,7 +34,7 @@ export const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#000000',  // Header color
+          backgroundColor: '#000000',
         },
       },
     },
@@ -44,6 +44,18 @@ export const theme = createTheme({
           borderRadius: 4,
           textTransform: 'none',
         },
+        outlined: {
+          color: '#000000',
+          '& .MuiSvgIcon-root': {
+            color: '#000000'
+          }
+        },
+        contained: {
+          color: '#ffffff',
+          '& .MuiSvgIcon-root': {
+            color: '#ffffff'
+          }
+        }
       },
     },
   },

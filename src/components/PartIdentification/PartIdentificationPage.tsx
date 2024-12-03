@@ -187,7 +187,11 @@ const PartIdentificationPage: React.FC = () => {
                 startIcon={<RefreshIcon />}
                 fullWidth={true}
                 sx={{
-                  minWidth: { xs: '100%', sm: '150px' }
+                    minWidth: { xs: '100%', sm: '150px' },
+                    color: '#000000',  // Black text for outlined button
+                    '& .MuiSvgIcon-root': {  // Black icon
+                      color: '#000000'
+                    }
                 }}
               >
                 Retake Photo
@@ -199,7 +203,11 @@ const PartIdentificationPage: React.FC = () => {
                 startIcon={<SearchIcon />}
                 fullWidth={true}
                 sx={{
-                  minWidth: { xs: '100%', sm: '150px' }
+                  minWidth: { xs: '100%', sm: '150px' },
+                  color: '#ffffff',  // Keep white text for contained button
+                  '& .MuiSvgIcon-root': {  // Keep white icon
+                    color: '#ffffff'
+                  }
                 }}
               >
                 Identify Part
