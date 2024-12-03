@@ -12,11 +12,11 @@ const Instructions: React.FC = () => {
           height: '100%',
           '& .MuiListItemText-primary': {
             fontSize: { xs: '0.9rem', sm: '1rem' },
-            textAlign: { xs: 'center', sm: 'left' }
+            textAlign: 'left'
           },
           '& .MuiListItemText-secondary': {
             fontSize: { xs: '0.8rem', sm: '0.875rem' },
-            textAlign: { xs: 'center', sm: 'left' }
+            textAlign: 'left'
           }
         }}>
           <Typography 
@@ -25,11 +25,11 @@ const Instructions: React.FC = () => {
             gutterBottom
             sx={{ 
               fontSize: { xs: '1.1rem', sm: '1.25rem' },
-              textAlign: { xs: 'center', sm: 'center' },
-              pb: 1,  // Add padding bottom
-              borderBottom: '1px solid',  // Add border
-              borderColor: 'primary.main',  // Match the text color
-              mb: 2  // Add margin bottom
+              textAlign: 'center',
+              pb: 1,
+              borderBottom: '1px solid',
+              borderColor: 'primary.main',
+              mb: 2
             }}
           >
             Best Practices
@@ -38,14 +38,12 @@ const Instructions: React.FC = () => {
             <ListItem 
               sx={{ 
                 px: { xs: 1, sm: 2 },
-                flexDirection: { xs: 'column', sm: 'row' },
-                alignItems: 'center',
-                gap: { xs: 1, sm: 0 }
+                flexDirection: 'row',
+                alignItems: 'center'
               }}
             >
               <ListItemIcon sx={{ 
-                minWidth: { xs: 'auto', sm: 40 },
-                mb: { xs: 0.5, sm: 0 }
+                minWidth: { xs: 36, sm: 40 }
               }}>
                 <CheckCircle color="success" />
               </ListItemIcon>
@@ -57,14 +55,12 @@ const Instructions: React.FC = () => {
             <ListItem 
               sx={{ 
                 px: { xs: 1, sm: 2 },
-                flexDirection: { xs: 'column', sm: 'row' },
-                alignItems: 'center',
-                gap: { xs: 1, sm: 0 }
+                flexDirection: 'row',
+                alignItems: 'center'
               }}
             >
               <ListItemIcon sx={{ 
-                minWidth: { xs: 'auto', sm: 40 },
-                mb: { xs: 0.5, sm: 0 }
+                minWidth: { xs: 36, sm: 40 }
               }}>
                 <CheckCircle color="success" />
               </ListItemIcon>
@@ -76,14 +72,12 @@ const Instructions: React.FC = () => {
             <ListItem 
               sx={{ 
                 px: { xs: 1, sm: 2 },
-                flexDirection: { xs: 'column', sm: 'row' },
-                alignItems: 'center',
-                gap: { xs: 1, sm: 0 }
+                flexDirection: 'row',
+                alignItems: 'center'
               }}
             >
               <ListItemIcon sx={{ 
-                minWidth: { xs: 'auto', sm: 40 },
-                mb: { xs: 0.5, sm: 0 }
+                minWidth: { xs: 36, sm: 40 }
               }}>
                 <CheckCircle color="success" />
               </ListItemIcon>
@@ -102,11 +96,11 @@ const Instructions: React.FC = () => {
           height: '100%',
           '& .MuiListItemText-primary': {
             fontSize: { xs: '0.9rem', sm: '1rem' },
-            textAlign: { xs: 'center', sm: 'left' }
+            textAlign: 'left'
           },
           '& .MuiListItemText-secondary': {
             fontSize: { xs: '0.8rem', sm: '0.875rem' },
-            textAlign: { xs: 'center', sm: 'left' }
+            textAlign: 'left'
           }
         }}>
           <Typography 
@@ -115,11 +109,11 @@ const Instructions: React.FC = () => {
             gutterBottom
             sx={{ 
               fontSize: { xs: '1.1rem', sm: '1.25rem' },
-              textAlign: { xs: 'center', sm: 'center' },
-              pb: 1,  // Add padding bottom
-              borderBottom: '1px solid',  // Add border
-              borderColor: 'primary.main',  // Match the text color
-              mb: 2  // Add margin bottom
+              textAlign: 'center',
+              pb: 1,
+              borderBottom: '1px solid',
+              borderColor: 'primary.main',
+              mb: 2
             }}
           >
             Simple Steps
@@ -128,14 +122,12 @@ const Instructions: React.FC = () => {
             <ListItem 
               sx={{ 
                 px: { xs: 1, sm: 2 },
-                flexDirection: { xs: 'column', sm: 'row' },
-                alignItems: 'center',
-                gap: { xs: 1, sm: 0 }
+                flexDirection: 'row',
+                alignItems: 'center'
               }}
             >
               <ListItemIcon sx={{ 
-                minWidth: { xs: 'auto', sm: 40 },
-                mb: { xs: 0.5, sm: 0 }
+                minWidth: { xs: 36, sm: 40 }
               }}>
                 <PhotoCamera color="primary" />
               </ListItemIcon>
@@ -147,14 +139,12 @@ const Instructions: React.FC = () => {
             <ListItem 
               sx={{ 
                 px: { xs: 1, sm: 2 },
-                flexDirection: { xs: 'column', sm: 'row' },
-                alignItems: 'center',
-                gap: { xs: 1, sm: 0 }
+                flexDirection: 'row',
+                alignItems: 'center'
               }}
             >
               <ListItemIcon sx={{ 
-                minWidth: { xs: 'auto', sm: 40 },
-                mb: { xs: 0.5, sm: 0 }
+                minWidth: { xs: 36, sm: 40 }
               }}>
                 <Search color="primary" />
               </ListItemIcon>
@@ -166,14 +156,12 @@ const Instructions: React.FC = () => {
             <ListItem 
               sx={{ 
                 px: { xs: 1, sm: 2 },
-                flexDirection: { xs: 'column', sm: 'row' },
-                alignItems: 'center',
-                gap: { xs: 1, sm: 0 }
+                flexDirection: 'row',
+                alignItems: 'center'
               }}
             >
               <ListItemIcon sx={{ 
-                minWidth: { xs: 'auto', sm: 40 },
-                mb: { xs: 0.5, sm: 0 }
+                minWidth: { xs: 36, sm: 40 }
               }}>
                 <CheckCircle color="primary" />
               </ListItemIcon>
@@ -192,11 +180,11 @@ const Instructions: React.FC = () => {
           height: '100%',
           '& .MuiListItemText-primary': {
             fontSize: { xs: '0.9rem', sm: '1rem' },
-            textAlign: { xs: 'center', sm: 'left' }
+            textAlign: 'left'
           },
           '& .MuiListItemText-secondary': {
             fontSize: { xs: '0.8rem', sm: '0.875rem' },
-            textAlign: { xs: 'center', sm: 'left' }
+            textAlign: 'left'
           }
         }}>
           <Typography 
@@ -205,11 +193,11 @@ const Instructions: React.FC = () => {
             gutterBottom
             sx={{ 
               fontSize: { xs: '1.1rem', sm: '1.25rem' },
-              textAlign: { xs: 'center', sm: 'center' },
-              pb: 1,  // Add padding bottom
-              borderBottom: '1px solid',  // Add border
-              borderColor: 'primary.main',  // Match the text color
-              mb: 2  // Add margin bottom
+              textAlign: 'center',
+              pb: 1,
+              borderBottom: '1px solid',
+              borderColor: 'error.main',
+              mb: 2
             }}
           >
             Common Issues
@@ -218,14 +206,12 @@ const Instructions: React.FC = () => {
             <ListItem 
               sx={{ 
                 px: { xs: 1, sm: 2 },
-                flexDirection: { xs: 'column', sm: 'row' },
-                alignItems: 'center',
-                gap: { xs: 1, sm: 0 }
+                flexDirection: 'row',
+                alignItems: 'center'
               }}
             >
               <ListItemIcon sx={{ 
-                minWidth: { xs: 'auto', sm: 40 },
-                mb: { xs: 0.5, sm: 0 }
+                minWidth: { xs: 36, sm: 40 }
               }}>
                 <Warning color="error" />
               </ListItemIcon>
@@ -237,14 +223,12 @@ const Instructions: React.FC = () => {
             <ListItem 
               sx={{ 
                 px: { xs: 1, sm: 2 },
-                flexDirection: { xs: 'column', sm: 'row' },
-                alignItems: 'center',
-                gap: { xs: 1, sm: 0 }
+                flexDirection: 'row',
+                alignItems: 'center'
               }}
             >
               <ListItemIcon sx={{ 
-                minWidth: { xs: 'auto', sm: 40 },
-                mb: { xs: 0.5, sm: 0 }
+                minWidth: { xs: 36, sm: 40 }
               }}>
                 <Warning color="error" />
               </ListItemIcon>
@@ -256,14 +240,12 @@ const Instructions: React.FC = () => {
             <ListItem 
               sx={{ 
                 px: { xs: 1, sm: 2 },
-                flexDirection: { xs: 'column', sm: 'row' },
-                alignItems: 'center',
-                gap: { xs: 1, sm: 0 }
+                flexDirection: 'row',
+                alignItems: 'center'
               }}
             >
               <ListItemIcon sx={{ 
-                minWidth: { xs: 'auto', sm: 40 },
-                mb: { xs: 0.5, sm: 0 }
+                minWidth: { xs: 36, sm: 40 }
               }}>
                 <Warning color="error" />
               </ListItemIcon>
