@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/part-identifier-frontend/static/js/main.71b6823d.js",
-    "static/media/greenlogo1.png": "/part-identifier-frontend/static/media/greenlogo1.2199f6fe4284ae7d614e.png",
+    "main.js": "/part-identifier-frontend/static/js/main.5ccc9e8c.js",
+    "static/media/blackgreenlogo2.png": "/part-identifier-frontend/static/media/blackgreenlogo2.63ced7fa1adfaa1b5566.png",
     "index.html": "/part-identifier-frontend/index.html",
-    "main.71b6823d.js.map": "/part-identifier-frontend/static/js/main.71b6823d.js.map"
+    "main.5ccc9e8c.js.map": "/part-identifier-frontend/static/js/main.5ccc9e8c.js.map"
   },
   "entrypoints": [
-    "static/js/main.71b6823d.js"
+    "static/js/main.5ccc9e8c.js"
   ]
 }
