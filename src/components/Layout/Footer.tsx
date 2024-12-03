@@ -43,7 +43,7 @@ const Footer: React.FC = () => {
                   }
                 }}
               >
-                <Typography variant="h6" sx={{ mb: 2 }}>
+                <Typography variant="h6" sx={{ mb: 1 }}>
                   All About Doors & Windows
                 </Typography>
               </Link>
@@ -53,9 +53,7 @@ const Footer: React.FC = () => {
               <Typography variant="body2" sx={{ color: '#000000', mb: 1 }}>
                 N. Kansas City, MO 64116
               </Typography>
-              <Typography variant="body2" sx={{ color: '#000000' }}>
-                Phone: (816) 221-6543
-              </Typography>
+              
             </Box>
   
             {/* Middle Column */}
@@ -63,12 +61,29 @@ const Footer: React.FC = () => {
               minWidth: { xs: '200px', sm: '200px' },
               width: { xs: '100%', sm: 'auto' }
             }}>
-              <Typography variant="h6" sx={{ color: '#000000', mb: 2 }}>
+              <Typography variant="h6" sx={{ color: '#000000', mb: 1 }}>
                 Hours & Contact
               </Typography>
               <Typography variant="body2" sx={{ color: '#000000', mb: 1 }}>
                 Hours: Mon-Fri 8AM-4PM CST
               </Typography>
+              <Link 
+                href="tel:+18162216543" 
+                sx={{ 
+                  textDecoration: 'none',
+                  color: '#000000',
+                  '&:hover': {
+                    color: '#2bdb09',  // matches your hover color scheme
+                    cursor: 'pointer'
+                  },
+                  display: 'block',
+                  mb: 1
+                }}
+              >
+                <Typography variant="body2">
+                  Phone: (816) 221-6543
+                </Typography>
+              </Link>
               <Link 
                 href="https://www.allaboutdoors.com" 
                 target="_blank" 
@@ -81,7 +96,7 @@ const Footer: React.FC = () => {
                   }
                 }}
               >
-                Website: allaboutdoors.com
+                allaboutdoors.com
               </Link>
             </Box>
   
@@ -90,7 +105,7 @@ const Footer: React.FC = () => {
               minWidth: { xs: '200px', sm: '200px' },
               width: { xs: '100%', sm: 'auto' }
             }}>
-              <Typography variant="h6" sx={{ color: '#000000', mb: 2 }}>
+              <Typography variant="h6" sx={{ color: '#000000', mb: 1 }}>
                 Legal
               </Typography>
               <Typography variant="body2" sx={{ color: '#000000', mb: 1 }}>

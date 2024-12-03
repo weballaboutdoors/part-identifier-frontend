@@ -25,7 +25,7 @@ const Instructions: React.FC = () => {
         gutterBottom
         sx={{ 
           fontSize: { xs: '1.1rem', sm: '1.25rem' },
-          textAlign: 'left',
+          textAlign: { xs: 'center', sm: 'left' },
           pb: 1,
           borderBottom: '1px solid',
           borderColor: 'primary.main',
