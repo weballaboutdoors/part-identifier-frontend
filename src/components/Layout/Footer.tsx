@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
           py: { xs: 2, sm: 3 },
           px: { xs: 1, sm: 2 },
           mt: 'auto',
-          backgroundColor: '#000000',
+          backgroundColor: '#48ad4d',
           minHeight: { xs: '100px', sm: '150px' }
         }}
       >
@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
                 target="_blank" 
                 rel="noopener noreferrer"
                 sx={{ 
-                  color: '#FFFFFF', 
+                  color: '#000000', 
                   textDecoration: 'none',
                   '&:hover': {
                     color: '#2bdb09'
@@ -47,13 +47,13 @@ const Footer: React.FC = () => {
                   All About Doors & Windows
                 </Typography>
               </Link>
-              <Typography variant="body2" sx={{ color: '#FFFFFF', mb: 1 }}>
+              <Typography variant="body2" sx={{ color: '#000000', mb: 1 }}>
                 110 E 16th Ave
               </Typography>
-              <Typography variant="body2" sx={{ color: '#FFFFFF', mb: 1 }}>
+              <Typography variant="body2" sx={{ color: '#000000', mb: 1 }}>
                 N. Kansas City, MO 64116
               </Typography>
-              <Typography variant="body2" sx={{ color: '#FFFFFF' }}>
+              <Typography variant="body2" sx={{ color: '#000000' }}>
                 Phone: (816) 221-6543
               </Typography>
             </Box>
@@ -63,10 +63,10 @@ const Footer: React.FC = () => {
               minWidth: { xs: '200px', sm: '200px' },
               width: { xs: '100%', sm: 'auto' }
             }}>
-              <Typography variant="h6" sx={{ color: '#FFFFFF', mb: 2 }}>
+              <Typography variant="h6" sx={{ color: '#000000', mb: 2 }}>
                 Hours & Contact
               </Typography>
-              <Typography variant="body2" sx={{ color: '#FFFFFF', mb: 1 }}>
+              <Typography variant="body2" sx={{ color: '#000000', mb: 1 }}>
                 Hours: Mon-Fri 8AM-4PM CST
               </Typography>
               <Link 
@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
                 target="_blank" 
                 rel="noopener noreferrer"
                 sx={{ 
-                  color: '#FFFFFF', 
+                  color: '#000000', 
                   textDecoration: 'none',
                   '&:hover': {
                     color: '#2bdb09'
@@ -90,10 +90,10 @@ const Footer: React.FC = () => {
               minWidth: { xs: '200px', sm: '200px' },
               width: { xs: '100%', sm: 'auto' }
             }}>
-              <Typography variant="h6" sx={{ color: '#FFFFFF', mb: 2 }}>
+              <Typography variant="h6" sx={{ color: '#000000', mb: 2 }}>
                 Legal
               </Typography>
-              <Typography variant="body2" sx={{ color: '#FFFFFF', mb: 1 }}>
+              <Typography variant="body2" sx={{ color: '#000000', mb: 1 }}>
                 © {new Date().getFullYear()} AADW
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: { xs: 'center', sm: 'flex-start' }, gap: 2 }}>
@@ -101,7 +101,7 @@ const Footer: React.FC = () => {
                   component={RouterLink}
                   to="/privacy-policy" 
                   sx={{ 
-                    color: '#FFFFFF', 
+                    color: '#000000', 
                     textDecoration: 'none',
                     '&:hover': {
                       color: '#2bdb09'
@@ -114,7 +114,7 @@ const Footer: React.FC = () => {
                   component={RouterLink}
                   to="/terms-of-service" 
                   sx={{ 
-                    color: '#FFFFFF', 
+                    color: '#000000', 
                     textDecoration: 'none',
                     '&:hover': {
                       color: '#2bdb09'

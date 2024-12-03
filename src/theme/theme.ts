@@ -4,22 +4,22 @@ export const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#000000',
-      light: '#64B5F6',
-      dark: '#2bdb09',
+      main: '#48ad4d',  // Main green color
+      light: '#6fcf70', // Lighter green for hover effects
+      dark: '#2c682f',  // Darker green for accents
     },
     secondary: {
-      main: '#FF4081',
+      main: '#FF4081',  // You can keep this or adjust as needed
       light: '#FF80AB',
       dark: '#F50057',
     },
     background: {
-      default: '#c4c4c4',
-      paper: '#ffffff',
+      default: '#f5f9f5',  // Very light mint/sage
+      paper: '#ffffff',    // White for paper elements
     },
     text: {
-      primary: '#333333',
-      secondary: '#757575',
+      primary: '#333333',  // Dark gray for primary text
+      secondary: '#757575', // Light gray for secondary text
     },
   },
   typography: {
@@ -34,7 +34,7 @@ export const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#000000',
+          backgroundColor: '#48ad4d',  // Header color
         },
       },
     },

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, AppBar, Toolbar, Typography, Container, Stack } from '@mui/material';
-import logo from '../../assets/logo3.png';
+import logo from '../../assets/greenlogo1.png';
 import Footer from './Footer';
 
 interface LayoutProps {
