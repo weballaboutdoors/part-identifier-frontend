@@ -49,14 +49,19 @@ const PartIdentificationPage: React.FC = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Paper sx={{ p: 2, mb: 3, backgroundColor: '#f5f5f5' }}>
-        <Typography variant="body2" align="center" color="text.secondary">
+      <Paper sx={{ p: 2, mb: 3, backgroundColor: '#ffffff' }}>
+        <Typography variant="body2" align="center" color="#000000">
           Before using this service, please review our{' '}
           <MuiLink component={Link} to="/terms-of-service">Terms of Service</MuiLink>{' '}
           and{' '}
           <MuiLink component={Link} to="/privacy-policy">Privacy Policy</MuiLink>.
         </Typography>
       </Paper>
+
+      {/* Move Instructions here, before the main Paper component */}
+      <Box sx={{ mb: 4 }}>
+        <Instructions />
+      </Box>
 
       <Paper sx={{ 
         p: { xs: 2, sm: 3 },  // Less padding on mobile
@@ -210,11 +215,8 @@ const PartIdentificationPage: React.FC = () => {
           />
         )}
       </Paper>
-
-      <Box sx={{ mt: 4 }}>
-        <Instructions />
-      </Box>
     </Box>
   );
 };
+
 export default PartIdentificationPage;
