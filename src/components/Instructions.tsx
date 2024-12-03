@@ -108,7 +108,7 @@ const Instructions: React.FC = () => {
           rel="noopener noreferrer"
           sx={{
             color: 'primary.main',
-            textDecoration: 'none',
+            textDecoration: 'underline',
             '&:hover': {
               textDecoration: 'underline'
             }
