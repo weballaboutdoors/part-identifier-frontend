@@ -107,9 +107,10 @@ const Instructions: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
           sx={{
-            color: 'primary.main',
+            color: '#285c2a',
             textDecoration: 'underline',
             '&:hover': {
+              color: '#48ad4d',
               textDecoration: 'underline'
             }
           }}

@@ -49,14 +49,36 @@ const PartIdentificationPage: React.FC = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Paper sx={{ p: 2, mb: 3, backgroundColor: '#ffffff' }}>
-        <Typography variant="body2" align="center" color="#000000">
-          Before using this service, please review our{' '}
-          <MuiLink component={Link} to="/terms-of-service">Terms of Service</MuiLink>{' '}
-          and{' '}
-          <MuiLink component={Link} to="/privacy-policy">Privacy Policy</MuiLink>.
-        </Typography>
-      </Paper>
+    <Paper sx={{ p: 2, mb: 3, backgroundColor: '#ffffff' }}>
+      <Typography variant="body2" align="center" color="#000000">
+        Before using this service, please review our{' '}
+        <MuiLink 
+          component={Link} 
+          to="/terms-of-service"
+          sx={{ 
+            color: '#285c2a',  // Darker green
+            '&:hover': {
+              color: '#48ad4d'  // Original green on hover
+            }
+          }}
+        >
+          Terms of Service
+        </MuiLink>{' '}
+        and{' '}
+        <MuiLink 
+          component={Link} 
+          to="/privacy-policy"
+          sx={{ 
+            color: '#285c2a',  // Darker green
+            '&:hover': {
+              color: '#48ad4d'  // Original green on hover
+            }
+          }}
+        >
+          Privacy Policy
+        </MuiLink>.
+      </Typography>
+    </Paper>
 
       {/* Move Instructions here, before the main Paper component */}
       <Box sx={{ mb: 4 }}>
