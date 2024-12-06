@@ -190,18 +190,22 @@ const PartIdentificationPage: React.FC = () => {
                 p: { xs: 1, sm: 2 }, 
                 width: '100%',
                 backgroundColor: '#f8f8f8',
-                borderRadius: 2
+                borderRadius: 2,
+                overflow: 'hidden' // Add this
               }}
             >
-              <img 
-                src={capturedImage} 
-                alt="Captured part" 
-                style={{ 
+              <Box
+                component="img"
+                src={capturedImage}
+                alt="Captured part"
+                sx={{
                   width: '100%',
                   height: 'auto',
-                  borderRadius: '4px',
-                  display: 'block'
-                }} 
+                  display: 'block',
+                  objectFit: 'contain', // Add this
+                  maxHeight: '500px', // Add this if you want to limit height
+                  borderRadius: '4px'
+                }}
               />
             </Paper>
 
