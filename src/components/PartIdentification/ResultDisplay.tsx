@@ -1,19 +1,42 @@
 import React, { useState } from 'react';
-import { Box, Button, Paper, Typography, CircularProgress } from '@mui/material';
-import { Check, Close } from '@mui/icons-material';
+import { 
+  Box, 
+  Button, 
+  Paper, 
+  Typography, 
+  CircularProgress,
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  CardActions 
+} from '@mui/material';
+import { Check, Close, ShoppingCart } from '@mui/icons-material';
 import { ApiResponse } from '../../types/types';
 
-
 interface ResultDisplayProps {
-    identificationResult: {
-      image: string;  // base64 or URL string
-    };
-    onRetry: () => void;
-  }
+  identificationResult: {
+    image: string;  // base64 or URL string
+  };
+  onRetry: () => void;
+}
 
-const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onRetry }) => {  // Add onRetry here
+interface ShopifyProduct {
+  id: string;
+  title: string;
+  description: string;
+  price: string;
+  sku: string;
+  image_url?: string;
+  inventory_quantity: number;
+  available: boolean;
+}
+
+const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onRetry }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [matchingProducts, setMatchingProducts] = useState<ShopifyProduct[]>([]);
+  const [identificationComplete, setIdentificationComplete] = useState(false);
 
   const handleConfirm = async () => {
     setIsLoading(true);
@@ -33,6 +56,9 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
       // Make API call to your backend
       const response = await fetch('http://localhost:8000/api/v1/identify', {
         method: 'POST',
+        headers: {
+          'X-API-Key': 'AIzaSyA7O2If2-Cd1mUwTZHMLKxnc14H2ygsgUY', // Add your API key
+        },
         body: formData,
       });
       
@@ -41,6 +67,13 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
       }
 
       const result: ApiResponse = await response.json();
+      
+      // Set matching products from the response
+      if (result.matching_products?.items) {
+        setMatchingProducts(result.matching_products.items);
+      }
+      
+      setIdentificationComplete(true);
       
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Failed to identify part');
@@ -51,9 +84,9 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
       <Paper elevation={3} sx={{ p: 1, mb: 2, maxWidth: 640 }}>
-      <img 
+        <img 
           src={identificationResult.image} 
           alt="Captured part" 
           style={{ width: '100%', height: 'auto' }} 
@@ -66,31 +99,89 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
         </Typography>
       )}
 
-      <Typography variant="body1" sx={{ mb: 2 }}>
-        Is this image clear enough?
-      </Typography>
+      {!identificationComplete ? (
+        <>
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            Is this image clear enough?
+          </Typography>
 
-      <Box sx={{ display: 'flex', gap: 2 }}>
-        <Button
-          variant="contained"
-          color="primary"
-          startIcon={isLoading ? <CircularProgress size={24} /> : <Check />}
-          onClick={handleConfirm}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Identifying...' : 'Yes, Identify Part'}
-        </Button>
-        
-        <Button
-          variant="outlined"
-          color="error"
-          startIcon={<Close />}
-          onClick={onRetry}
-          disabled={isLoading}
-        >
-          No, Retake Photo
-        </Button>
-      </Box>
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={isLoading ? <CircularProgress size={24} /> : <Check />}
+              onClick={handleConfirm}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Identifying...' : 'Yes, Identify Part'}
+            </Button>
+            
+            <Button
+              variant="outlined"
+              color="error"
+              startIcon={<Close />}
+              onClick={onRetry}
+              disabled={isLoading}
+            >
+              No, Retake Photo
+            </Button>
+          </Box>
+        </>
+      ) : (
+        <Box sx={{ width: '100%', mt: 4 }}>
+          <Typography variant="h6" sx={{ mb: 2 }}>
+            Matching Products ({matchingProducts.length})
+          </Typography>
+          
+          <Grid container spacing={3}>
+            {matchingProducts.map((product) => (
+              <Grid item xs={12} sm={6} md={4} key={product.id}>
+                <Card>
+                  {product.image_url && (
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={product.image_url}
+                      alt={product.title}
+                    />
+                  )}
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="div">
+                      {product.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      SKU: {product.sku}
+                    </Typography>
+                    <Typography variant="h6" color="primary">
+                      ${product.price}
+                    </Typography>
+                    <Typography variant="body2" color={product.available ? "success.main" : "error.main"}>
+                      {product.available ? `In Stock (${product.inventory_quantity})` : 'Out of Stock'}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button 
+                      size="small" 
+                      startIcon={<ShoppingCart />}
+                      disabled={!product.available}
+                    >
+                      Add to Cart
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+          
+          <Button
+            variant="outlined"
+            onClick={onRetry}
+            sx={{ mt: 3 }}
+          >
+            Take Another Photo
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };

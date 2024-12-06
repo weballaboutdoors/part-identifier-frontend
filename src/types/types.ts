@@ -10,14 +10,26 @@ export interface ApiResponse {
     success: boolean;
     filename: string;
     file_size: number;
-    results: IdentificationResult;
+    results: {
+      labels: string[];
+      detected_objects: any[];
+      possible_part_numbers: string[];
+    };
     record_id: number;
-    predictions?: {
-      confidence: number;
-      label: string;
-    }[];
-    error?: string;
-}
+    matching_products: {
+      total: number;
+      items: Array<{
+        id: string;
+        title: string;
+        description: string;
+        price: string;
+        sku: string;
+        image_url?: string;
+        inventory_quantity: number;
+        available: boolean;
+      }>;
+    };
+  }
 
 // Add any additional types you might need
 export interface ErrorState {
