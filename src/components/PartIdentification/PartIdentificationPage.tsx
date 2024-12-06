@@ -33,17 +33,28 @@ const PartIdentificationPage: React.FC = () => {
 
   const handleIdentification = async (image: string) => {
     try {
-      const response = await fetch(image);
-      const blob = await response.blob();
-      const file = new File([blob], "captured-image.jpg", { type: "image/jpeg" });
+      // Convert base64 image to file
+      const base64Response = await fetch(image);
+      const blob = await base64Response.blob();
+      const file = new File([blob], "captured-image.jpg", { type: 'image/jpeg' });
+
+      // Create form data
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('min_confidence', '50.0');
+
+      // Call API service
+      const result = await identifyPart(formData);
+      console.log('Identification result:', result);
       
-      const result = await identifyPart(file);
-      setIdentificationResult(result);
-      setActiveStep(2);
-      setError(null);
+      // Handle the result
+      if (result.matching_products?.items) {
+        // Handle matching products
+      }
+      
     } catch (error) {
       console.error('Error identifying part:', error);
-      setError('Failed to identify part. Please try again.');
+      // Handle error
     }
   };
 
