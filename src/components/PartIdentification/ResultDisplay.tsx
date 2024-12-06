@@ -1,19 +1,9 @@
 import React, { useState } from 'react';
-import { 
-  Box, 
-  Button, 
-  Paper, 
-  Typography, 
-  CircularProgress,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  CardActions 
-} from '@mui/material';
+import { Box, Button, Paper, Typography, CircularProgress, Grid, Card, CardContent, CardMedia, CardActions } from '@mui/material';
 import { Check, Close, ShoppingCart } from '@mui/icons-material';
-import { ApiResponse } from '../../types/types';
+import { ShopifyProduct } from '../../types/types';
 
+import axios from 'axios';
 interface ResultDisplayProps {
   identificationResult: {
     image: string;  // base64 or URL string
@@ -21,21 +11,12 @@ interface ResultDisplayProps {
   onRetry: () => void;
 }
 
-interface ShopifyProduct {
-  id: string;
-  title: string;
-  description: string;
-  price: string;
-  sku: string;
-  image_url?: string;
-  inventory_quantity: number;
-  available: boolean;
-}
+
 
 const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onRetry }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [matchingProducts, setMatchingProducts] = useState<ShopifyProduct[]>([]);
+  const [matchingProducts, setMatchingProducts] = useState<ShopifyProduct[]>([]);  
   const [identificationComplete, setIdentificationComplete] = useState(false);
 
   const handleConfirm = async () => {
@@ -43,8 +24,6 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
     setError(null);
 
     try {
-      const API_URL = 'http://localhost:8000/api/v1/identify'.trim();
-      
       // Convert base64 image to file
       const base64Response = await fetch(identificationResult.image);
       const blob = await base64Response.blob();
@@ -55,33 +34,29 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
       formData.append('image', file);
       formData.append('min_confidence', '50.0');
 
-      // Make API call
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'X-API-Key': process.env.REACT_APP_API_KEY || '',
-        },
-        body: formData,
-      });
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error response:', errorText);
-        throw new Error(`Error: ${response.status}`);
-      }
+      // Make API call using axios
+      const response = await axios.post(
+        'http://localhost:8000/api/v1/identify',
+        formData,
+        {
+          headers: {
+            'X-API-Key': process.env.REACT_APP_API_KEY || '',
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
 
-      const result = await response.json();
-      console.log('Result:', result);
+      console.log('Response:', response.data); // Debug log
       
-      if (result.matching_products?.items) {
-        setMatchingProducts(result.matching_products.items);
+      if (response.data.matching_products?.items) {
+        setMatchingProducts(response.data.matching_products.items);
       }
       
       setIdentificationComplete(true);
       
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to identify part');
       console.error('Error:', error);
+      setError(error instanceof Error ? error.message : 'Failed to identify part');
     } finally {
       setIsLoading(false);
     }

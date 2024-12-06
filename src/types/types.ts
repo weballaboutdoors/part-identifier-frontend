@@ -31,6 +31,17 @@ export interface ApiResponse {
     };
   }
 
+  export interface ShopifyProduct {
+    id: string;
+    title: string;
+    description: string;
+    price: string;
+    sku: string;
+    image_url?: string;
+    inventory_quantity: number;
+    available: boolean;
+  }
+
 // Add any additional types you might need
 export interface ErrorState {
     message: string;
