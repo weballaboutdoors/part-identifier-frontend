@@ -43,7 +43,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
     setError(null);
 
     try {
-      const API_URL = `${process.env.REACT_APP_API_URL}/identify`;
+      const API_URL = 'http://localhost:8000/api/v1/identify'.trim();
       
       // Convert base64 image to file
       const base64Response = await fetch(identificationResult.image);
@@ -55,22 +55,22 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
       formData.append('image', file);
       formData.append('min_confidence', '50.0');
 
-      // Make API call with API key from env
+      // Make API call
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
-          'X-API-Key': process.env.REACT_APP_API_KEY || ''
+          'X-API-Key': process.env.REACT_APP_API_KEY || '',
         },
         body: formData,
       });
       
-      console.log('Response status:', response.status); // Debug log
-      
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
         throw new Error(`Error: ${response.status}`);
       }
 
-      const result: ApiResponse = await response.json();
+      const result = await response.json();
       console.log('Result:', result);
       
       if (result.matching_products?.items) {
