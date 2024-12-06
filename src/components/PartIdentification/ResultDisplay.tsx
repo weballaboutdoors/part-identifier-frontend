@@ -53,53 +53,63 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
     setError(null);
 
     try {
-      // Debug log
-      console.log('Starting identification process');
-      
-      const base64Response = await fetch(identificationResult.image);
-      const blob = await base64Response.blob();
-      const file = new File([blob], "captured-image.jpg", { type: 'image/jpeg' });
+        console.log('Starting identification process');
+        
+        const base64Response = await fetch(identificationResult.image);
+        const blob = await base64Response.blob();
+        const file = new File([blob], "captured-image.jpg", { type: 'image/jpeg' });
 
-      const formData = new FormData();
-      formData.append('image', file);
-      formData.append('min_confidence', '50.0');
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('min_confidence', '70.0'); // Increased confidence threshold
 
-      // Debug log
-      console.log('Sending request to backend');
+        console.log('Sending request to backend');
 
-      const response = await axios.post(
-        'http://localhost:8000/api/v1/identify',
-        formData,
-        {
-          headers: {
-            'X-API-Key': process.env.REACT_APP_API_KEY || '',
-            'Content-Type': 'multipart/form-data',
-            'Accept': 'application/json',
-          },
-          withCredentials: true // Add this
+        const response = await axios.post(
+            'http://localhost:8000/api/v1/identify',
+            formData,
+            {
+                headers: {
+                    'X-API-Key': process.env.REACT_APP_API_KEY || '',
+                    'Content-Type': 'multipart/form-data',
+                    'Accept': 'application/json',
+                },
+                withCredentials: true
+            }
+        );
+
+        console.log('Response received:', response.data);
+        
+        if (response.data.matching_products?.items) {
+            // Filter out products without images and sort by confidence
+            const validProducts = response.data.matching_products.items
+                .filter((product: ShopifyProduct) => product.image_url) // Only include products with images
+                .sort((a: ShopifyProduct, b: ShopifyProduct) => {
+                    // Sort by confidence score if available
+                    return (b.confidence || 0) - (a.confidence || 0);
+                });
+            
+            setMatchingProducts(validProducts);
+            
+            if (validProducts.length === 0) {
+                setError('No matching products found with images');
+            }
         }
-      );
-
-      console.log('Response received:', response.data);
-      
-      if (response.data.matching_products?.items) {
-        setMatchingProducts(response.data.matching_products.items);
-      }
-      
-      setIdentificationComplete(true);
-      
+        
+        setIdentificationComplete(true);
+        
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error('Axios Error:', error.response?.data || error.message);
-        setError(error.response?.data?.detail || error.message);
-      } else {
-        console.error('Error:', error);
-        setError('Failed to identify part');
-      }
+        if (axios.isAxiosError(error)) {
+            console.error('Axios Error:', error.response?.data || error.message);
+            setError(error.response?.data?.detail || error.message);
+        } else {
+            console.error('Error:', error);
+            setError('Failed to identify part');
+        }
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
-  };
+};
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>

@@ -40,6 +40,7 @@ export interface ApiResponse {
     image_url?: string;
     inventory_quantity: number;
     available: boolean;
+    confidence?: number;
   }
 
 // Add any additional types you might need
