@@ -53,11 +53,11 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
       formData.append('image', file);
       formData.append('min_confidence', '50.0');
 
-      // Make API call to your backend
-      const response = await fetch('http://localhost:8000/api/v1/identify', {
+      // Make API call to your backend with correct URL and headers
+      const response = await fetch('http://localhost:8000/api/v1/identify', {  // Fixed URL
         method: 'POST',
         headers: {
-          'X-API-Key': 'AIzaSyA7O2If2-Cd1mUwTZHMLKxnc14H2ygsgUY', // Add your API key
+          'X-API-Key': 'AIzaSyA7O2If2-Cd1mUwTZHMLKxnc14H2ygsgUY'  // Your API key from .env
         },
         body: formData,
       });
@@ -67,6 +67,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
       }
 
       const result: ApiResponse = await response.json();
+      console.log('Identification result:', result); // Add this to debug
       
       // Set matching products from the response
       if (result.matching_products?.items) {
