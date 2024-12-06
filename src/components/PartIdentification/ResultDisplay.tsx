@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Button, Paper, Typography, CircularProgress, Grid, Card, CardContent, CardMedia, CardActions } from '@mui/material';
-import { Check, Close, ShoppingCart } from '@mui/icons-material';
+import { Box, Button, Paper, Typography, CircularProgress, Grid, Card, CardContent, CardMedia, CardActions, Tooltip, IconButton } from '@mui/material';
+import { Check, Close, ShoppingCart, ContentCopy } from '@mui/icons-material';
 import { ShopifyProduct } from '../../types/types';
-
 import axios from 'axios';
+
+
 interface ResultDisplayProps {
   identificationResult: {
     image: string;  // base64 or URL string
@@ -18,6 +19,34 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
   const [error, setError] = useState<string | null>(null);
   const [matchingProducts, setMatchingProducts] = useState<ShopifyProduct[]>([]);  
   const [identificationComplete, setIdentificationComplete] = useState(false);
+  const [copiedSku, setCopiedSku] = useState<string | null>(null);
+
+
+  // Add function to sort and limit results
+  const getTopMatches = (products: ShopifyProduct[], limit: number = 10) => {
+    return products
+      .sort((a, b) => {
+        // Sort by availability first
+        if (a.available !== b.available) {
+          return b.available ? -1 : 1;
+        }
+        // Then by inventory quantity
+        return (b.inventory_quantity || 0) - (a.inventory_quantity || 0);
+      })
+      .slice(0, limit);
+  };
+
+  // Add function to handle SKU copying
+  const handleCopySku = async (sku: string) => {
+    try {
+      await navigator.clipboard.writeText(sku);
+      setCopiedSku(sku);
+      setTimeout(() => setCopiedSku(null), 2000); // Reset after 2 seconds
+    } catch (err) {
+      console.error('Failed to copy SKU:', err);
+    }
+  };
+
 
   const handleConfirm = async () => {
     setIsLoading(true);
@@ -74,13 +103,31 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-      <Paper elevation={3} sx={{ p: 1, mb: 2, maxWidth: 640 }}>
-        <img 
-          src={identificationResult.image} 
-          alt="Captured part" 
-          style={{ width: '100%', height: 'auto' }} 
-        />
-      </Paper>
+      <Paper 
+  elevation={3} 
+  sx={{ 
+    p: 1, 
+    mb: 2, 
+    maxWidth: 640,
+    backgroundColor: '#f8f8f8',
+    borderRadius: 2,
+    overflow: 'hidden' // Add this
+  }}
+>
+  <Box
+    component="img"
+    src={identificationResult.image}
+    alt="Captured part"
+    sx={{
+      width: '100%',
+      height: 'auto',
+      display: 'block',
+      maxHeight: '400px',
+      objectFit: 'contain',
+      margin: '0 auto'
+    }}
+  />
+</Paper>
 
       {error && (
         <Typography color="error" sx={{ mb: 2 }}>
@@ -119,11 +166,11 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
       ) : (
         <Box sx={{ width: '100%', mt: 4 }}>
           <Typography variant="h6" sx={{ mb: 2 }}>
-            Matching Products ({matchingProducts.length})
+            Top Matching Products ({matchingProducts.length})
           </Typography>
           
           <Grid container spacing={3}>
-            {matchingProducts.map((product) => (
+            {getTopMatches(matchingProducts, 10).map((product) => (
               <Grid item xs={12} sm={6} md={4} key={product.id}>
                 <Card>
                   {product.image_url && (
@@ -138,9 +185,20 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
                     <Typography gutterBottom variant="h6" component="div">
                       {product.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      SKU: {product.sku}
-                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        SKU: {product.sku}
+                      </Typography>
+                      <Tooltip title={copiedSku === product.sku ? "Copied!" : "Copy SKU"}>
+                        <IconButton 
+                          size="small" 
+                          onClick={() => handleCopySku(product.sku)}
+                          color={copiedSku === product.sku ? "success" : "default"}
+                        >
+                          <ContentCopy fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
                     <Typography variant="h6" color="primary">
                       ${product.price}
                     </Typography>
@@ -161,6 +219,12 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
               </Grid>
             ))}
           </Grid>
+
+          {matchingProducts.length > 10 && (
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2, textAlign: 'center' }}>
+              Showing top 10 matches out of {matchingProducts.length} total results
+            </Typography>
+          )}
           
           <Button
             variant="outlined"

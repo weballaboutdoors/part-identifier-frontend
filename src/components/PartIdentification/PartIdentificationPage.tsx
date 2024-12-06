@@ -22,29 +22,27 @@ const PartIdentificationPage: React.FC = () => {
   };
 
   const handleImageUpload = (file: File) => {
-    console.log('File being uploaded:', file); // Debug log
+    console.log('Starting file upload process', file.name); // Debug log
     
-    // Validate file type
-    if (!file.type.startsWith('image/')) {
-        setError('Please upload an image file');
-        return;
-    }
-
     const reader = new FileReader();
     reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-            console.log('File loaded successfully'); // Debug log
-            setCapturedImage(reader.result);
-            setActiveStep(1);
-        }
+        const base64String = reader.result as string;
+        console.log('File converted to base64'); // Debug log
+        setCapturedImage(base64String);
+        setActiveStep(1); // Move to review step
     };
 
-    reader.onerror = () => {
-        console.error('Error reading file'); // Debug log
-        setError('Error reading file');
+    reader.onerror = (error) => {
+        console.error('Error reading file:', error);
+        setError('Failed to read uploaded file');
     };
 
-    reader.readAsDataURL(file);
+    try {
+        reader.readAsDataURL(file);
+    } catch (error) {
+        console.error('Error starting file read:', error);
+        setError('Failed to process uploaded file');
+    }
 };
 
 // Add this state at the top with other state declarations
@@ -52,15 +50,17 @@ const PartIdentificationPage: React.FC = () => {
 
   const handleIdentification = async (image: string) => {
     try {
-        console.log('Starting identification process');
-        
-        // Use original filename if available, otherwise generate one
-        const filename = capturedFilename || `part_image_${new Date().getTime()}.jpg`;
+        console.log('Starting identification process'); // Debug log
         
         // Convert base64 image to file
         const base64Response = await fetch(image);
         const blob = await base64Response.blob();
+        
+        // Use the original file name or generate one
+        const filename = `uploaded_image_${new Date().getTime()}.jpg`;
         const file = new File([blob], filename, { type: 'image/jpeg' });
+        
+        console.log('Preparing to send file:', filename); // Debug log
 
         // Create form data
         const formData = new FormData();
@@ -69,9 +69,8 @@ const PartIdentificationPage: React.FC = () => {
 
         // Call API service
         const result = await identifyPart(formData);
-        console.log('Identification result:', result);
+        console.log('Identification result:', result); // Debug log
         
-        // Set the result and move to next step
         setIdentificationResult(result);
         setActiveStep(2);
         
@@ -172,7 +171,7 @@ const PartIdentificationPage: React.FC = () => {
             }}
           >
             <CameraCapture onCapture={handleImageCapture} />
-            <ImageUpload onImageSelect={handleImageUpload} />
+            
           </Stack>
         )}
 
@@ -276,9 +275,11 @@ const PartIdentificationPage: React.FC = () => {
           </Box>
         )}
 
-        {activeStep === 2 && identificationResult && (
+        {activeStep === 2 && capturedImage && (
           <ResultDisplay 
-            identificationResult={identificationResult} 
+            identificationResult={{ 
+              image: capturedImage  // Make sure this is the base64 string
+            }} 
             onRetry={() => setActiveStep(0)} 
           />
         )}
