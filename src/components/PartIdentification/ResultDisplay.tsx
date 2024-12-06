@@ -61,7 +61,8 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
 
         const formData = new FormData();
         formData.append('image', file);
-        formData.append('min_confidence', '70.0'); // Increased confidence threshold
+        // Increase minimum confidence threshold for better matches
+        formData.append('min_confidence', '75.0'); // Increased from 50.0 to 75.0
 
         console.log('Sending request to backend');
 
@@ -81,18 +82,15 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
         console.log('Response received:', response.data);
         
         if (response.data.matching_products?.items) {
-            // Filter out products without images and sort by confidence
-            const validProducts = response.data.matching_products.items
-                .filter((product: ShopifyProduct) => product.image_url) // Only include products with images
-                .sort((a: ShopifyProduct, b: ShopifyProduct) => {
-                    // Sort by confidence score if available
-                    return (b.confidence || 0) - (a.confidence || 0);
-                });
+            // Filter and sort products by confidence score
+            const refinedProducts = response.data.matching_products.items
+                .filter((product: any) => product.confidence >= 75) // Only show high confidence matches
+                .sort((a: any, b: any) => (b.confidence || 0) - (a.confidence || 0)); // Sort by confidence
+
+            setMatchingProducts(refinedProducts);
             
-            setMatchingProducts(validProducts);
-            
-            if (validProducts.length === 0) {
-                setError('No matching products found with images');
+            if (refinedProducts.length === 0) {
+                setError('No high-confidence matches found. Please try a clearer image.');
             }
         }
         
