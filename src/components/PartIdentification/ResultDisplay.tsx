@@ -43,6 +43,8 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
     setError(null);
 
     try {
+      const API_URL = `${process.env.REACT_APP_API_URL}/identify`;
+      
       // Convert base64 image to file
       const base64Response = await fetch(identificationResult.image);
       const blob = await base64Response.blob();
@@ -53,23 +55,24 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
       formData.append('image', file);
       formData.append('min_confidence', '50.0');
 
-      // Make API call to your backend with correct URL and headers
-      const response = await fetch('http://localhost:8000/api/v1/identify', {  // Fixed URL
+      // Make API call with API key from env
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
-          'X-API-Key': 'AIzaSyA7O2If2-Cd1mUwTZHMLKxnc14H2ygsgUY'  // Your API key from .env
+          'X-API-Key': process.env.REACT_APP_API_KEY || ''
         },
         body: formData,
       });
+      
+      console.log('Response status:', response.status); // Debug log
       
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
 
       const result: ApiResponse = await response.json();
-      console.log('Identification result:', result); // Add this to debug
+      console.log('Result:', result);
       
-      // Set matching products from the response
       if (result.matching_products?.items) {
         setMatchingProducts(result.matching_products.items);
       }
@@ -83,7 +86,6 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
       setIsLoading(false);
     }
   };
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
       <Paper elevation={3} sx={{ p: 1, mb: 2, maxWidth: 640 }}>
