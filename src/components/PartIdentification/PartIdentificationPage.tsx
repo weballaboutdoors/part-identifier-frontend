@@ -22,14 +22,28 @@ const PartIdentificationPage: React.FC = () => {
   };
 
   const handleImageUpload = (file: File) => {
+    console.log('File being uploaded:', file); // Debug log
+    
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+        setError('Please upload an image file');
+        return;
+    }
+
     const reader = new FileReader();
     reader.onloadend = () => {
-        const base64String = reader.result as string;
-        setCapturedImage(base64String);
-        // Store the original filename
-        setCapturedFilename(file.name);  // Add this state variable
-        setActiveStep(1);
+        if (typeof reader.result === 'string') {
+            console.log('File loaded successfully'); // Debug log
+            setCapturedImage(reader.result);
+            setActiveStep(1);
+        }
     };
+
+    reader.onerror = () => {
+        console.error('Error reading file'); // Debug log
+        setError('Error reading file');
+    };
+
     reader.readAsDataURL(file);
 };
 

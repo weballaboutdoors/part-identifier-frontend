@@ -8,13 +8,29 @@ interface ImageUploadProps {
 
 const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      onImageSelect(file);
-    }
+      const file = event.target.files?.[0];
+      if (file) {
+          console.log('File selected:', file); // Debug log
+          onImageSelect(file);
+      }
   };
 
-  return null;
+  return (
+      <Button
+          variant="outlined"
+          component="label"
+          fullWidth
+          sx={{ mt: 2 }}
+      >
+          Upload Image
+          <input
+              type="file"
+              hidden
+              accept="image/*"
+              onChange={handleFileChange}
+          />
+      </Button>
+  );
 };
 
 export default ImageUpload;
