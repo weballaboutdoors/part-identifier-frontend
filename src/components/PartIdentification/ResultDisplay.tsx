@@ -24,17 +24,20 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
     setError(null);
 
     try {
-      // Convert base64 image to file
+      // Debug log
+      console.log('Starting identification process');
+      
       const base64Response = await fetch(identificationResult.image);
       const blob = await base64Response.blob();
       const file = new File([blob], "captured-image.jpg", { type: 'image/jpeg' });
 
-      // Create form data
       const formData = new FormData();
       formData.append('image', file);
       formData.append('min_confidence', '50.0');
 
-      // Make API call using axios
+      // Debug log
+      console.log('Sending request to backend');
+
       const response = await axios.post(
         'http://localhost:8000/api/v1/identify',
         formData,
@@ -42,11 +45,13 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
           headers: {
             'X-API-Key': process.env.REACT_APP_API_KEY || '',
             'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
           },
+          withCredentials: true // Add this
         }
       );
 
-      console.log('Response:', response.data); // Debug log
+      console.log('Response received:', response.data);
       
       if (response.data.matching_products?.items) {
         setMatchingProducts(response.data.matching_products.items);
@@ -55,12 +60,18 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
       setIdentificationComplete(true);
       
     } catch (error) {
-      console.error('Error:', error);
-      setError(error instanceof Error ? error.message : 'Failed to identify part');
+      if (axios.isAxiosError(error)) {
+        console.error('Axios Error:', error.response?.data || error.message);
+        setError(error.response?.data?.detail || error.message);
+      } else {
+        console.error('Error:', error);
+        setError('Failed to identify part');
+      }
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
       <Paper elevation={3} sx={{ p: 1, mb: 2, maxWidth: 640 }}>

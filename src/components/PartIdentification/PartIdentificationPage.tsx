@@ -24,39 +24,48 @@ const PartIdentificationPage: React.FC = () => {
   const handleImageUpload = (file: File) => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      const base64String = reader.result as string;
-      setCapturedImage(base64String);
-      setActiveStep(1);
+        const base64String = reader.result as string;
+        setCapturedImage(base64String);
+        // Store the original filename
+        setCapturedFilename(file.name);  // Add this state variable
+        setActiveStep(1);
     };
     reader.readAsDataURL(file);
-  };
+};
+
+// Add this state at the top with other state declarations
+  const [capturedFilename, setCapturedFilename] = useState<string | null>(null);
 
   const handleIdentification = async (image: string) => {
     try {
-      // Convert base64 image to file
-      const base64Response = await fetch(image);
-      const blob = await base64Response.blob();
-      const file = new File([blob], "captured-image.jpg", { type: 'image/jpeg' });
+        console.log('Starting identification process');
+        
+        // Use original filename if available, otherwise generate one
+        const filename = capturedFilename || `part_image_${new Date().getTime()}.jpg`;
+        
+        // Convert base64 image to file
+        const base64Response = await fetch(image);
+        const blob = await base64Response.blob();
+        const file = new File([blob], filename, { type: 'image/jpeg' });
 
-      // Create form data
-      const formData = new FormData();
-      formData.append('image', file);
-      formData.append('min_confidence', '50.0');
+        // Create form data
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('min_confidence', '50.0');
 
-      // Call API service
-      const result = await identifyPart(formData);
-      console.log('Identification result:', result);
-      
-      // Handle the result
-      if (result.matching_products?.items) {
-        // Handle matching products
-      }
-      
+        // Call API service
+        const result = await identifyPart(formData);
+        console.log('Identification result:', result);
+        
+        // Set the result and move to next step
+        setIdentificationResult(result);
+        setActiveStep(2);
+        
     } catch (error) {
-      console.error('Error identifying part:', error);
-      // Handle error
+        console.error('Error identifying part:', error);
+        setError(error instanceof Error ? error.message : 'Failed to identify part');
     }
-  };
+};
 
   return (
     <Box sx={{ width: '100%' }}>
