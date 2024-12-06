@@ -166,7 +166,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
       ) : (
         <Box sx={{ width: '100%', mt: 4 }}>
           <Typography variant="h6" sx={{ mb: 2 }}>
-            Top Matching Products ({matchingProducts.length})
+            Top Matching Products ({Math.min(matchingProducts.length, 10)})
           </Typography>
           
           <Grid container spacing={3}>
