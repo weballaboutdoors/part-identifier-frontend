@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Paper, Stepper, Step, StepLabel, Typography, Button, Stack, Link as MuiLink } from '@mui/material';
+import { Box, Paper, Stepper, Step, StepLabel, Typography, Button, Stack, Link as MuiLink, TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CameraCapture from './CameraCapture';
 import ImageUpload from './ImageUpload';
@@ -7,6 +7,7 @@ import ResultDisplay from './ResultDisplay';
 import Instructions from '../../components/Instructions';
 import { identifyPart } from '../../services/api';
 import { Refresh as RefreshIcon, Search as SearchIcon } from '@mui/icons-material';
+
 const steps = ['Capture / Upload', 'Review Image', 'View Results'];
 
 const PartIdentificationPage: React.FC = () => {
@@ -15,6 +16,8 @@ const PartIdentificationPage: React.FC = () => {
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [identificationResult, setIdentificationResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [capturedFilename, setCapturedFilename] = useState<string | null>(null);
 
   const handleImageCapture = (image: string) => {
     setCapturedImage(image);
@@ -22,14 +25,14 @@ const PartIdentificationPage: React.FC = () => {
   };
 
   const handleImageUpload = (file: File) => {
-    console.log('Starting file upload process', file.name); // Debug log
+    console.log('Starting file upload process', file.name);
     
     const reader = new FileReader();
     reader.onloadend = () => {
         const base64String = reader.result as string;
-        console.log('File converted to base64'); // Debug log
+        console.log('File converted to base64');
         setCapturedImage(base64String);
-        setActiveStep(1); // Move to review step
+        setActiveStep(1);
     };
 
     reader.onerror = (error) => {
@@ -43,33 +46,29 @@ const PartIdentificationPage: React.FC = () => {
         console.error('Error starting file read:', error);
         setError('Failed to process uploaded file');
     }
-};
-
-// Add this state at the top with other state declarations
-  const [capturedFilename, setCapturedFilename] = useState<string | null>(null);
+  };
 
   const handleIdentification = async (image: string) => {
     try {
-        console.log('Starting identification process'); // Debug log
+        console.log('Starting identification process with image and text');
         
-        // Convert base64 image to file
         const base64Response = await fetch(image);
         const blob = await base64Response.blob();
-        
-        // Use the original file name or generate one
         const filename = `uploaded_image_${new Date().getTime()}.jpg`;
         const file = new File([blob], filename, { type: 'image/jpeg' });
         
-        console.log('Preparing to send file:', filename); // Debug log
-
-        // Create form data
         const formData = new FormData();
         formData.append('image', file);
         formData.append('min_confidence', '50.0');
+        
+        // Add text search query if provided
+        if (searchQuery.trim()) {
+            formData.append('text_query', searchQuery.trim());
+            console.log('Added text query to search:', searchQuery.trim());
+        }
 
-        // Call API service
         const result = await identifyPart(formData);
-        console.log('Identification result:', result); // Debug log
+        console.log('Identification result:', result);
         
         setIdentificationResult(result);
         setActiveStep(2);
@@ -78,69 +77,62 @@ const PartIdentificationPage: React.FC = () => {
         console.error('Error identifying part:', error);
         setError(error instanceof Error ? error.message : 'Failed to identify part');
     }
-};
+  };
 
   return (
     <Box sx={{ width: '100%' }}>
-    <Paper sx={{ p: 2, mb: 3, backgroundColor: '#ffffff' }}>
-      <Typography variant="body2" align="center" color="#000000">
-        Before using this service, please review our{' '}
-        <MuiLink 
-          component={Link} 
-          to="/terms-of-service"
-          sx={{ 
-            color: '#285c2a',  // Darker green
-            '&:hover': {
-              color: '#48ad4d'  // Original green on hover
-            }
-          }}
-        >
-          Terms of Service
-        </MuiLink>{' '}
-        and{' '}
-        <MuiLink 
-          component={Link} 
-          to="/privacy-policy"
-          sx={{ 
-            color: '#285c2a',  // Darker green
-            '&:hover': {
-              color: '#48ad4d'  // Original green on hover
-            }
-          }}
-        >
-          Privacy Policy
-        </MuiLink>.
-      </Typography>
-    </Paper>
+      <Paper sx={{ p: 2, mb: 3, backgroundColor: '#ffffff' }}>
+        <Typography variant="body2" align="center" color="#000000">
+          Before using this service, please review our{' '}
+          <MuiLink 
+            component={Link} 
+            to="/terms-of-service"
+            sx={{ 
+              color: '#285c2a',
+              '&:hover': {
+                color: '#48ad4d'
+              }
+            }}
+          >
+            Terms of Service
+          </MuiLink>{' '}
+          and{' '}
+          <MuiLink 
+            component={Link} 
+            to="/privacy-policy"
+            sx={{ 
+              color: '#285c2a',
+              '&:hover': {
+                color: '#48ad4d'
+              }
+            }}
+          >
+            Privacy Policy
+          </MuiLink>.
+        </Typography>
+      </Paper>
 
-      {/* Move Instructions here, before the main Paper component */}
       <Box sx={{ mb: 4 }}>
         <Instructions />
       </Box>
 
-      <Paper sx={{ 
-        p: { xs: 2, sm: 3 },  // Less padding on mobile
-        mb: 3 
-      }}>
+      <Paper sx={{ p: { xs: 2, sm: 3 }, mb: 3 }}>
         <Stepper 
           activeStep={activeStep} 
           sx={{ 
             mb: { xs: 2, sm: 4 },
             '& .MuiStepLabel-label': {
-              // Adjust text size for mobile
               typography: { xs: 'caption', sm: 'body2' },
               mt: { xs: 0.5, sm: 1 }
             },
-            // Make stepper more compact on mobile
             '& .MuiStep-root': {
               px: { xs: 0.5, sm: 1 }
             },
-            // Adjust connector width
             '& .MuiStepConnector-line': {
               borderColor: 'grey.400',
-              minHeight: { xs: '1px', sm: '2px' },  // Reduced line height
+              minHeight: { xs: '1px', sm: '2px' },
               position: 'relative',
-              top: { xs: '8px', sm: '5px' }      // Adjust vertical position
+              top: { xs: '8px', sm: '5px' }
             },
           }}
         >
@@ -163,15 +155,11 @@ const PartIdentificationPage: React.FC = () => {
             alignItems="center"
             sx={{ 
               width: '100%', 
-              maxWidth: {
-                xs: '100%',
-                sm: '400px'
-              }, 
+              maxWidth: { xs: '100%', sm: '400px' }, 
               margin: '0 auto' 
             }}
           >
             <CameraCapture onCapture={handleImageCapture} />
-            
           </Stack>
         )}
 
@@ -181,18 +169,13 @@ const PartIdentificationPage: React.FC = () => {
             flexDirection: 'column', 
             alignItems: 'center',
             gap: { xs: 2, sm: 3 },
-            maxWidth: {
-              xs: '100%',
-              sm: '800px'
-            },
+            maxWidth: { xs: '100%', sm: '800px' },
             margin: '0 auto'
           }}>
             <Typography 
               variant="h6" 
               color="text.secondary"
-              sx={{
-                fontSize: { xs: '1rem', sm: '1.25rem' }
-              }}
+              sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
             >
               Review Your Image
             </Typography>
@@ -204,7 +187,7 @@ const PartIdentificationPage: React.FC = () => {
                 width: '100%',
                 backgroundColor: '#f8f8f8',
                 borderRadius: 2,
-                overflow: 'hidden' // Add this
+                overflow: 'hidden'
               }}
             >
               <Box
@@ -215,20 +198,30 @@ const PartIdentificationPage: React.FC = () => {
                   width: '100%',
                   height: 'auto',
                   display: 'block',
-                  objectFit: 'contain', // Add this
-                  maxHeight: '500px', // Add this if you want to limit height
+                  objectFit: 'contain',
+                  maxHeight: '500px',
                   borderRadius: '4px'
                 }}
               />
             </Paper>
 
+            <TextField
+              fullWidth
+              label="Add additional search terms (optional)"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Enter part number, description, or other details"
+              sx={{ 
+                mt: 2,
+                maxWidth: '100%'
+              }}
+            />
+
             <Typography 
               variant="body2" 
               color="text.secondary"
               align="center"
-              sx={{
-                px: { xs: 2, sm: 0 }
-              }}
+              sx={{ px: { xs: 2, sm: 0 } }}
             >
               Please ensure the image is clear and well-lit before proceeding
             </Typography>
@@ -246,11 +239,11 @@ const PartIdentificationPage: React.FC = () => {
                 startIcon={<RefreshIcon />}
                 fullWidth={true}
                 sx={{
-                    minWidth: { xs: '100%', sm: '150px' },
-                    color: '#000000',  // Black text for outlined button
-                    '& .MuiSvgIcon-root': {  // Black icon
-                      color: '#000000'
-                    }
+                  minWidth: { xs: '100%', sm: '150px' },
+                  color: '#000000',
+                  '& .MuiSvgIcon-root': {
+                    color: '#000000'
+                  }
                 }}
               >
                 Retake Photo
@@ -263,8 +256,8 @@ const PartIdentificationPage: React.FC = () => {
                 fullWidth={true}
                 sx={{
                   minWidth: { xs: '100%', sm: '150px' },
-                  color: '#ffffff',  // Keep white text for contained button
-                  '& .MuiSvgIcon-root': {  // Keep white icon
+                  color: '#ffffff',
+                  '& .MuiSvgIcon-root': {
                     color: '#ffffff'
                   }
                 }}
@@ -278,9 +271,12 @@ const PartIdentificationPage: React.FC = () => {
         {activeStep === 2 && capturedImage && (
           <ResultDisplay 
             identificationResult={{ 
-              image: capturedImage  // Make sure this is the base64 string
+              image: capturedImage
             }} 
-            onRetry={() => setActiveStep(0)} 
+            onRetry={() => {
+              setActiveStep(0);
+              setSearchQuery('');
+            }} 
           />
         )}
       </Paper>

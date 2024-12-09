@@ -11,27 +11,15 @@ export interface ApiResponse {
     filename: string;
     file_size: number;
     results: {
-      labels: string[];
-      detected_objects: any[];
-      possible_part_numbers: string[];
+        labels: string[];
+        detected_objects: any[];
+        possible_part_numbers: string[];
     };
     record_id: number;
-    matching_products: {
-      total: number;
-      items: Array<{
-        id: string;
-        title: string;
-        description: string;
-        price: string;
-        sku: string;
-        image_url?: string;
-        inventory_quantity: number;
-        available: boolean;
-      }>;
-    };
-  }
+    matching_products: ShopifyProduct[]; // Changed this to array of ShopifyProduct
+}
 
-  export interface ShopifyProduct {
+export interface ShopifyProduct {
     id: string;
     title: string;
     description: string;
@@ -41,7 +29,15 @@ export interface ApiResponse {
     inventory_quantity: number;
     available: boolean;
     confidence?: number;
-  }
+    relevance_score?: number;
+    body_html?: string; // Added this as it's used in the backend
+    tags?: string[]; // Added this as it's used in the backend
+    variants?: any[]; // Added this as it's used in the backend
+    vendor?: string;
+    product_type?: string;
+    handle?: string;
+    variants_count?: number;
+}
 
 // Add any additional types you might need
 export interface ErrorState {
