@@ -304,7 +304,8 @@ const PartIdentificationPage: React.FC = () => {
             <option value="window_part">Window Part</option>
             <option value="latch">Latch</option>
             <option value="hinge">Hinge</option>
-            <option value="dummy_handle">Dummy Handle</option>
+            <option value="sash_lock">Sash Lock</option>
+            <option value="keeper">Keeper</option>
             </TextField>
 
             <TextField
