@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Paper, Stepper, Step, StepLabel, Typography, Button, Stack, Link as MuiLink, TextField } from '@mui/material';
+import { Box, Paper, Stepper, Step, StepLabel, Typography, Button, Stack, Link as MuiLink, TextField, CircularProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CameraCapture from './CameraCapture';
 import ImageUpload from './ImageUpload';
@@ -18,6 +18,13 @@ const PartIdentificationPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [capturedFilename, setCapturedFilename] = useState<string | null>(null);
+  const [sku, setSku] = useState('');
+  const [color, setColor] = useState('');
+  const [brand, setBrand] = useState('');
+  const [productType, setProductType] = useState('');
+  const [location, setLocation] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isProcessingImage, setIsProcessingImage] = useState(false);
 
   const handleImageCapture = (image: string) => {
     setCapturedImage(image);
@@ -48,7 +55,24 @@ const PartIdentificationPage: React.FC = () => {
     }
   };
 
+  const handleRetry = () => {
+    setActiveStep(0);
+    setSearchQuery('');
+    setSku('');
+    setColor('');
+    setBrand('');
+    setProductType('');
+    setLocation('');
+    setCapturedImage(null);
+    setIdentificationResult(null);
+    setError(null);
+  };
+
   const handleIdentification = async (image: string) => {
+    setIsLoading(true);
+    setIsProcessingImage(true);
+    setError(null);
+    
     try {
         console.log('Starting identification process with image and text');
         
@@ -61,12 +85,26 @@ const PartIdentificationPage: React.FC = () => {
         formData.append('image', file);
         formData.append('min_confidence', '50.0');
         
-        // Add text search query if provided
         if (searchQuery.trim()) {
             formData.append('text_query', searchQuery.trim());
             console.log('Added text query to search:', searchQuery.trim());
         }
 
+        const searchParams = {
+            text_query: searchQuery.trim(),
+            sku: sku.trim(),
+            product_type: productType,
+            color: color.trim(),
+            location: location
+        };
+
+        Object.entries(searchParams).forEach(([key, value]) => {
+            if (value) {
+                formData.append(key, value);
+            }
+        });
+
+        setIsProcessingImage(false); // Switch to searching phase
         const result = await identifyPart(formData);
         console.log('Identification result:', result);
         
@@ -76,6 +114,8 @@ const PartIdentificationPage: React.FC = () => {
     } catch (error) {
         console.error('Error identifying part:', error);
         setError(error instanceof Error ? error.message : 'Failed to identify part');
+    } finally {
+        setIsLoading(false);
     }
   };
 
@@ -172,6 +212,28 @@ const PartIdentificationPage: React.FC = () => {
             maxWidth: { xs: '100%', sm: '800px' },
             margin: '0 auto'
           }}>
+
+            {isLoading && (
+                <Box sx={{ 
+                  position: 'absolute',
+                  top: '75%',
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                  zIndex: 1000,
+                  padding: '20px'
+                }}>
+                  <CircularProgress size={60} />
+                  <Typography variant="h6" sx={{ mt: 2 }}>
+                    {isProcessingImage ? 'Processing Image...' : 'Searching Products...'}
+                  </Typography>
+                 </Box>
+                )}
             <Typography 
               variant="h6" 
               color="text.secondary"
@@ -217,6 +279,61 @@ const PartIdentificationPage: React.FC = () => {
               }}
             />
 
+            <Stack spacing={2} sx={{ width: '100%', mt: 2 }}>
+            <TextField
+            fullWidth
+            label="Part Number/SKU"
+            value={sku}
+            onChange={(e) => setSku(e.target.value)}
+            placeholder="Enter specific part number if known"
+            />
+
+            <Box sx={{ display: 'flex', gap: 2 }}>
+            <TextField
+              fullWidth
+              select
+              label="Product Type"
+              value={productType}
+              onChange={(e) => setProductType(e.target.value)}
+              SelectProps={{
+                native: true
+            }}
+            >
+            <option value=""></option>
+            <option value="door_handle">Door Handle</option>
+            <option value="window_part">Window Part</option>
+            <option value="latch">Latch</option>
+            <option value="hinge">Hinge</option>
+            <option value="dummy_handle">Dummy Handle</option>
+            </TextField>
+
+            <TextField
+            fullWidth
+            select
+            label="Location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            SelectProps={{
+                native: true
+            }}
+            >
+            <option value=""></option>
+            <option value="interior">Interior</option>
+            <option value="exterior">Exterior</option>
+            </TextField>
+            </Box>
+
+            <TextField
+            fullWidth
+            label="Color/Finish"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            placeholder="e.g., Bronze, White, Black"
+            />
+            </Stack>
+
+
+
             <Typography 
               variant="body2" 
               color="text.secondary"
@@ -230,17 +347,24 @@ const PartIdentificationPage: React.FC = () => {
               display: 'flex', 
               gap: { xs: 1, sm: 2 },
               flexDirection: { xs: 'column', sm: 'row' },
-              width: { xs: '100%', sm: 'auto' }
+              width: { xs: '100%', sm: 'auto' },
+              mt: 2
             }}>
               <Button 
                 variant="outlined"
                 color="primary"
                 onClick={() => setActiveStep(0)}
                 startIcon={<RefreshIcon />}
+                disabled={isLoading}
                 fullWidth={true}
                 sx={{
                   minWidth: { xs: '100%', sm: '150px' },
                   color: '#000000',
+                  borderColor: '#000000',
+                  '&:hover': {
+                    borderColor: '#000000',
+                    backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                  },
                   '& .MuiSvgIcon-root': {
                     color: '#000000'
                   }
@@ -248,21 +372,26 @@ const PartIdentificationPage: React.FC = () => {
               >
                 Retake Photo
               </Button>
-              
+        
               <Button 
                 variant="contained" 
                 onClick={() => handleIdentification(capturedImage)}
-                startIcon={<SearchIcon />}
+                startIcon={isLoading ? <CircularProgress size={24} color="inherit" /> : <SearchIcon />}
+                disabled={isLoading}
                 fullWidth={true}
                 sx={{
                   minWidth: { xs: '100%', sm: '150px' },
+                  backgroundColor: '#48ad4d',
                   color: '#ffffff',
+                  '&:hover': {
+                    backgroundColor: '#48ad4d'
+                  },
                   '& .MuiSvgIcon-root': {
                     color: '#ffffff'
                   }
                 }}
               >
-                Identify Part
+                {isLoading ? (isProcessingImage ? 'Processing...' : 'Searching...') : 'Identify Part'}
               </Button>
             </Box>
           </Box>
@@ -270,13 +399,15 @@ const PartIdentificationPage: React.FC = () => {
 
         {activeStep === 2 && capturedImage && (
           <ResultDisplay 
-            identificationResult={{ 
-              image: capturedImage
-            }} 
-            onRetry={() => {
-              setActiveStep(0);
-              setSearchQuery('');
-            }} 
+          identificationResult={{ 
+            image: capturedImage
+          }} 
+          onRetry={handleRetry}
+          filters={{
+            sku,
+            color,
+            brand
+          }}
           />
         )}
       </Paper>

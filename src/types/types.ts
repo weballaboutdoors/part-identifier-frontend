@@ -32,11 +32,17 @@ export interface ShopifyProduct {
     relevance_score?: number;
     body_html?: string; // Added this as it's used in the backend
     tags?: string[]; // Added this as it's used in the backend
-    variants?: any[]; // Added this as it's used in the backend
+    variants?: Array<{
+        sku: string;
+        id: string;
+      }>;
     vendor?: string;
     product_type?: string;
     handle?: string;
     variants_count?: number;
+    variant_id?: string;
+    exact_sku_match?: boolean;
+    confidence_score?: number;
 }
 
 // Add any additional types you might need
