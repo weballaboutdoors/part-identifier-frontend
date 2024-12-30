@@ -7,7 +7,7 @@ const API_BASE_URL = process.env.NODE_ENV === 'production'
 
 export const identifyPart = async (formData: FormData) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/api/v1/identify`, formData, {
+        const response = await axios.post(`${API_BASE_URL}/identify`, formData, {
             headers: {
                 'X-API-Key': API_KEY,
                 'Content-Type': 'multipart/form-data',
