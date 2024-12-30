@@ -1,15 +1,14 @@
 import React from 'react';
 
 interface ImageUploadProps {
-  onImageSelect: (file: File) => void;
+  onUpload: (file: File) => void;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({ onUpload }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      console.log('File selected:', file); // Debug log
-      onImageSelect(file);
+      onUpload(file);
     }
   };
 
@@ -18,6 +17,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageSelect }) => {
       type="file"
       accept="image/*"
       onChange={handleFileChange}
+      style={{ display: 'none' }}
+      id="image-upload-input"
     />
   );
 };

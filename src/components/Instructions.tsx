@@ -119,6 +119,19 @@ const Instructions: React.FC = () => {
         </Link>
         {' '}for additional assistance.
       </Typography>
+      <Typography 
+        variant="body2" 
+        sx={{ 
+          mb: 2,
+          mt: 2,
+          backgroundColor: '#f5f5f5', 
+          p: 2, 
+          borderRadius: 1,
+          fontStyle: 'italic'
+        }}
+      >
+        Note: This part identification tool is currently in beta. While we strive for accuracy, results may not be perfect. Please verify the part is correct before ordering.
+      </Typography>
     </Paper>
   );
 };

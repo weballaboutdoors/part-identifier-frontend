@@ -1,9 +1,16 @@
-// Define your types and interfaces here
+// types.ts
+
 export interface IdentificationResult {
     confidence_score: number;
     detected_objects: string[];
     labels: string[];
     possible_part_numbers: string[];
+    image?: string;
+    matches?: Array<{
+        product: ShopifyProduct;
+        score: number;
+        match_type: string;
+    }>;
 }
 
 export interface ApiResponse {
@@ -16,7 +23,7 @@ export interface ApiResponse {
         possible_part_numbers: string[];
     };
     record_id: number;
-    matching_products: ShopifyProduct[]; // Changed this to array of ShopifyProduct
+    matching_products: ShopifyProduct[];
 }
 
 export interface ShopifyProduct {
@@ -30,12 +37,12 @@ export interface ShopifyProduct {
     available: boolean;
     confidence?: number;
     relevance_score?: number;
-    body_html?: string; // Added this as it's used in the backend
-    tags?: string[]; // Added this as it's used in the backend
+    body_html?: string;
+    tags?: string[];
     variants?: Array<{
         sku: string;
         id: string;
-      }>;
+    }>;
     vendor?: string;
     product_type?: string;
     handle?: string;
@@ -45,16 +52,69 @@ export interface ShopifyProduct {
     confidence_score?: number;
 }
 
-// Add any additional types you might need
-export interface ErrorState {
-    message: string;
-    code?: number;
+export interface Subcategories {
+    style?: string[];
+    type?: string[];
+    operation?: string[];
+    location?: string[];
 }
 
-export interface PartMatch {
-    partNumber: string;
-    name: string;
-    price: number;
-    availability: boolean;
-    imageUrl?: string;
+export interface Category {
+    label: string;
+    subcategories: Subcategories;
+    commonSkus?: {
+        [key: string]: string[];
+    };
 }
+
+export interface FormState {
+    sku: string;
+    productType: string;
+    subType: string;
+    style: string;
+    operation: string;
+    location: string;
+    color: string;
+    brand: string;
+    finish: string;
+}
+
+export interface FinishOption {
+    value: string;
+    label: string;
+}
+
+export interface LocationOption {
+    value: string;
+    label: string;
+}
+
+export type PartCategoriesType = Record<string, Category>;
+
+export interface SearchFilters {
+    sku?: string;
+    color?: string;
+    brand?: string;
+    productType?: string;
+    subType?: string;
+    style?: string;
+    operation?: string;
+    location?: string;
+}
+
+export interface NoResultsCardProps {
+    searchQuery?: string;
+  }
+  
+  export interface ResultDisplayProps {
+    identificationResult: {
+      matches?: any[];
+      searchQuery?: string;
+      image?: string;
+    };
+    onRetry: () => void;
+    filters: {
+      searchQuery?: string;
+      [key: string]: any;
+    };
+  }
