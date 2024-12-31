@@ -49,7 +49,7 @@ export const PartFeedback: React.FC<FeedbackProps> = ({
         },
         body: JSON.stringify({
           predicted_sku: predictedSku,
-          feedback_type: feedbackType,
+          feedback_type: feedbackType
         }),
       });
 
