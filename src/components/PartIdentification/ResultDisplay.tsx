@@ -146,6 +146,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
   const [matchingProducts, setMatchingProducts] = useState<ShopifyProduct[]>([]);  
   const [identificationComplete, setIdentificationComplete] = useState(false);
   const [copiedSku, setCopiedSku] = useState<string | null>(null);
+  const [identificationId, setIdentificationId] = useState<number | null>(null);
 
   const getSortedMatches = (products: ShopifyProduct[]) => {
     return products.sort((a, b) => {
@@ -223,6 +224,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
         console.log('Matching Products:', response.data.matching_products);
         setMatchingProducts(response.data.matching_products);
         setIdentificationComplete(true);
+        setIdentificationId(response.data.identification_id);
         identificationResult.identification_id = response.data.identification_id;
         setError(null);
       } else {
@@ -235,7 +237,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
     } finally {
       setIsLoading(false);
     }
-    
+
   };
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
@@ -415,7 +417,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
 
                     <Box sx={{ mt: 1 }}>
                       <PartFeedback
-                        identificationId={identificationResult.identification_id || 0}
+                        identificationId={identificationId || 0}
                         predictedSku={product.sku}
                         onFeedbackSubmit={() => {
                           console.log('Feedback submitted for SKU:', product.sku);
