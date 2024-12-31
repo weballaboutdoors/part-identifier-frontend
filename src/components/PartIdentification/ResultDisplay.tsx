@@ -311,7 +311,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
               onClick={handleConfirm}
               disabled={isLoading}
             >
-              {isLoading ? 'Identifying...' : 'Yes, Identify Part'}
+              {isLoading ? 'Identifying...' : 'Identify'}
             </Button>
             
             <Button
@@ -321,7 +321,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
               onClick={onRetry}
               disabled={isLoading}
             >
-              No, Retake Photo
+              Retake
             </Button>
           </Box>
 
@@ -443,13 +443,22 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
             ))}
           </Grid>
           
-          <Box sx={{ display: 'flex', gap: 7, justifyContent: 'center', mt: 3 }}>
+          <Box 
+            sx={{ 
+              display: 'flex', 
+              flexDirection: { xs: 'column', sm: 'row' },  // Stack vertically on mobile
+              gap: { xs: 2, sm: 7 },  // Smaller gap on mobile
+              justifyContent: 'center', 
+              mt: 3,
+              width: '100%'  // Full width container
+            }}
+          >
             <Button
               variant="contained"
               onClick={onRetry}
               startIcon={<CameraAlt />}
               sx={{ 
-                minWidth: '180px',
+                minWidth: { xs: '100%', sm: '180px' },  // Full width on mobile
                 backgroundColor: '#48ad4d',
                 color: '#000000',
                 '& .MuiSvgIcon-root': {
@@ -466,7 +475,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
               to="/"
               startIcon={<SearchIcon />}
               sx={{ 
-                minWidth: '180px',
+                minWidth: { xs: '100%', sm: '180px' },  // Full width on mobile
                 backgroundColor: '#48ad4d',
                 color: '#000000',
                 '&:hover': {
@@ -480,8 +489,6 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
               Search Another Part
             </Button>
           </Box>
-
-          <NoResultsCard />
         </Box>
       )}
     </Box>
