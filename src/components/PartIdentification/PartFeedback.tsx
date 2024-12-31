@@ -19,6 +19,7 @@ import {
   QuestionMark
 } from '@mui/icons-material';
 
+
 interface FeedbackProps {
   identificationId: number;
   predictedSku: string;
@@ -34,12 +35,17 @@ export const PartFeedback: React.FC<FeedbackProps> = ({
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
+  const API_URL = process.env.NODE_ENV === 'production'
+    ? 'https://part-identifier-app-09f6c3e0b9b0.herokuapp.com/api/v1'
+    : 'http://localhost:8000/api/v1';
+
   const handleSubmit = async (feedbackType: 'correct' | 'possible' | 'wrong') => {
     try {
-      const response = await fetch(`/api/feedback/${identificationId}`, {
+      const response = await fetch(`${API_URL}/feedback/${identificationId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-API-Key': process.env.REACT_APP_API_KEY || '',
         },
         body: JSON.stringify({
           predicted_sku: predictedSku,
@@ -47,7 +53,10 @@ export const PartFeedback: React.FC<FeedbackProps> = ({
         }),
       });
 
-      if (!response.ok) throw new Error('Failed to submit feedback');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Failed to submit feedback');
+      }
 
       setSuccess(true);
       setTimeout(() => {
@@ -56,6 +65,7 @@ export const PartFeedback: React.FC<FeedbackProps> = ({
       }, 1500);
 
     } catch (err) {
+      console.error('Feedback submission error:', err);
       setError('Failed to submit feedback. Please try again.');
     }
   };
