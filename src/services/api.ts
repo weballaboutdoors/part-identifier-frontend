@@ -16,21 +16,14 @@ const api = axios.create({
     }
 });
 
-
-
 export const identifyPart = async (formData: FormData) => {
     try {
-        // Make sure the file is being added with the correct field name
-        const response = await axios({
-            method: 'post',
-            url: `${API_BASE_URL}/identify`,
-            data: formData,
+        const response = await api.post('/identify', formData, {
             headers: {
-                'Content-Type': 'multipart/form-data',
-                'X-API-Key': process.env.REACT_APP_API_KEY
+                'Content-Type': 'multipart/form-data'
             }
         });
-        console.log('Response:', response.data); // Add this for debugging
+        console.log('Response:', response.data);
         return response.data;
     } catch (error) {
         console.error('API Error:', error);

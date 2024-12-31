@@ -182,14 +182,14 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
     setIsLoading(true);
     setIsProcessingImage(true);
     setError(null);
-
+  
     try {
       console.log('Starting identification process');
       
       const base64Response = await fetch(identificationResult.image);
       const blob = await base64Response.blob();
       const file = new File([blob], "uploaded_image_" + Date.now() + ".jpg", { type: 'image/jpeg' });
-
+  
       const formData = new FormData();
       formData.append('image', file);
       formData.append('min_confidence', '75.0');
@@ -198,21 +198,25 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
         formData.append('text_query', filters.sku);
         console.log('Adding SKU to search:', filters.sku);
       }
-
+  
       setIsProcessingImage(false);
-
+  
+      const API_URL = process.env.NODE_ENV === 'production'
+        ? 'https://part-identifier-app-09f6c3e0b9b0.herokuapp.com/api/v1/identify'
+        : 'http://localhost:8000/api/v1/identify';
+  
       const response = await axios.post(
-        'http://localhost:8000/api/v1/identify',
+        API_URL,
         formData,
         {
           headers: {
             'X-API-Key': process.env.REACT_APP_API_KEY || '',
             'Content-Type': 'multipart/form-data',
           },
-          withCredentials: true
+          withCredentials: false
         }
       );
-
+  
       console.log('Response received:', response.data);
       
       if (response.data.matching_products) {
@@ -231,8 +235,8 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ identificationResult, onR
     } finally {
       setIsLoading(false);
     }
+    
   };
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
       <Paper 
