@@ -88,7 +88,7 @@ const NoResultsCard = () => (
           fullWidth
           variant="outlined"
           startIcon={<PhoneIcon />}
-          onClick={() => window.location.href = 'tel:1-800-123-4567'}
+          onClick={() => window.location.href = 'tel:816-221-6543'}
           sx={{
             borderColor: '#000000',
             backgroundColor: '#48ad4d',
